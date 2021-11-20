@@ -1,7 +1,7 @@
 # PHP Project, 2A/Y2
-A short school php project.
-University : Université Clermont-Auvergne, Aubière, France
-District   : IUT Informatique
+A short school php project.  
+University : Université Clermont-Auvergne, Aubière, France.  
+District   : IUT Informatique.
 
 ## Theme
 News website automated by reading RSS flows
