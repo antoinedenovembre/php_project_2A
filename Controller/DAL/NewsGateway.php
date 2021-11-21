@@ -40,7 +40,7 @@ class NewsGateway
             ':isfrench' => array($isfrench, PDO::PARAM_BOOL)
         );
 
-        if ($site<>"" || $titre<>0 || $dateGet<>"" || $lien<>"") {
+        if ($site !== "" || $titre !== "" || $dateGet !== "" || $lien !== "") {
             $this->con->executeQuery($query, $params);
             return $this->con->lastInsertId();
         }
@@ -80,7 +80,7 @@ class NewsGateway
             ':isfrench' => array($isfrench, PDO::PARAM_BOOL)
         );
 
-        if ($id<>0 || $site<>"" || $titre<>0 || $dateGet<>"" || $lien<>"") {
+        if ($id !== 0 || $site !== "" || $titre !== "" || $dateGet !== "" || $lien !== "") {
             $this->con->executeQuery($query, $params);
         }
     }
@@ -98,7 +98,7 @@ class NewsGateway
             ':id' => array($id, PDO::PARAM_INT)
         );
 
-        if ($id<>0) {
+        if ($id !== 0) {
             $this->con->executeQuery($query, $params);
         }
     }
@@ -109,9 +109,9 @@ class NewsGateway
      */
     public function FindByDate(string $date) : array
     {
-        // recup données côté db (preparation + exec grâce a Connection::executeQuery())
+        // récupère données côté db (preparation + exec grâce à Connection::executeQuery())
         Validation::validString($date);
-        if ($date<>"") {
+        if ($date !== "") {
             $query = 'SELECT * FROM News WHERE dateGet = :dateGet';
             $params = array(
                 ':dateGet' => array($date, PDO::PARAM_STR)
@@ -122,8 +122,9 @@ class NewsGateway
             // conversion en objets
             $res = $this->con->getResults();
             $tabN = array();
-            foreach ($res as $row)
+            foreach ($res as $row) {
                 $tabN[] = new News($row['id'], $row['site'], $row['titre'], $row['dateGet'], $row['lien'], $row['isfrench']);
+            }
             return $tabN;
         }
         return array();

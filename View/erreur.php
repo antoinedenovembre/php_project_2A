@@ -4,7 +4,7 @@
         <h1>ERROR</h1>
         <?php
             if (isset($dataVueErreur)) {
-                foreach ($dataVueErreur as $value){
+                foreach ($dataVueErreur as $value) {
                     echo $value;
                 }
             }

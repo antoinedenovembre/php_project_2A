@@ -8,7 +8,7 @@ class Validation
     public static function validString(string & $str) : void
     {
         if (!isset($str) || empty($str = filter_var($str, FILTER_SANITIZE_STRING))) {
-            $str = "";
+            throw new InvalidArgumentException($str . ' is not a valid string');
         }
     }
 
@@ -19,17 +19,17 @@ class Validation
     {
         if (!isset($mail) || empty($mail = filter_var($mail, FILTER_SANITIZE_EMAIL)) ||
             !filter_var($mail, FILTER_VALIDATE_EMAIL)) {
-            $mail = "";
+            throw new InvalidArgumentException($mail . ' is not a valid mail');
         }
     }
 
     /**
-     * @param string $int
+     * @param mixed $int
      */
-    public static function validInt(string & $int) : void
+    public static function validInt(mixed & $int) : void
     {
         if (!isset($int) || empty($int = filter_var($int, FILTER_SANITIZE_NUMBER_INT))) {
-            $int = 0;
+            throw new InvalidArgumentException($int . ' is not a valid integer');
         } else {
             $int = filter_var($int, FILTER_VALIDATE_INT);
         }

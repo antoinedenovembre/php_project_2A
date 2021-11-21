@@ -2,7 +2,7 @@
 
 class Connection extends PDO { 
 
-	private $stmt;
+	private PDOStatement $stmt;
 
 	public function __construct(string $dsn, string $username, string $password) {
 		parent::__construct($dsn,$username,$password);
@@ -10,7 +10,7 @@ class Connection extends PDO {
 	}
 
 	public function executeQuery(string $query, array $parameters = []) : bool{
-		$this->stmt = parent::prepare($query);
+		$this->stmt = $this->prepare($query);
 		foreach ($parameters as $name => $value) {
 			$this->stmt->bindValue($name, $value[0], $value[1]);
 		}
