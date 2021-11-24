@@ -2,7 +2,7 @@
     $rep = __DIR__ . '/../'; // Répertoire racine
 
     //Base de données
-    $base = "projet";
+    $dsn = "mysql:host=localhost:80;dbname=projet;";
     $user = "root";
     $pass = ""; // à modifier en fonction de la config du serveur
 

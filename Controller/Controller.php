@@ -2,9 +2,9 @@
 
 class Controller
 {
-    function __construct() {
+    public function __construct() {
         global $rep, $view; // nécessaire pour utiliser variables globales
-        // on démarre ou reprend la session si necessaire (préférez utiliser un modèle pour gérer vos session ou cookies)
+        // on démarre ou reprend la session si nécessaire (préférez utiliser un modèle pour gérer votre session ou cookies)
         session_start();
 
         //on initialise un tableau d'erreur
@@ -25,7 +25,7 @@ class Controller
                 //mauvaise action
                 default:
                     $errorArr[] =	"Bad php call";
-                    require ($rep.$view['Home.php']);
+                    require ($rep.$view['Error.php']);
                     break;
             }
 
@@ -42,32 +42,14 @@ class Controller
         exit(0);
     }
 
-    function Reinit() {
+    public function Reinit(): void {
         global $rep, $vues;
 
-        $viewArr = array (
-            'nom' => "",
-            'age' => 0,
-        );
         require ($rep.$vues['Home.php']);
     }
 
-    function ValidationFormulaire(array $dVueErreur) {
+    public function ValidationFormulaire(array $dVueErreur): void {
         global $rep, $vues;
 
-        //si exception, ca remonte
-        $nom=$_POST['txtNom']; // txtNom = nom du champ texte dans le formulaire
-        $age=$_POST['txtAge'];
-        Validation::val_form($nom,$age,$dVueErreur);
-
-        $model = new Simplemodel();
-        $data=$model->get_data();
-
-        $viewArr = array (
-            'nom' => $nom,
-            'age' => $age,
-            'data' => $data,
-        );
-        require ($rep.$vues['Home.php']);
     }
 }

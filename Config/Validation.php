@@ -38,13 +38,13 @@ class Validation
     /**
      * @param mixed $int
      */
-    public static function validInt(mixed & $int) : void
+    public static function validInt(string|int & $int) : void
     {
         if (!isset($int) || empty($int = filter_var($int, FILTER_SANITIZE_NUMBER_INT))) {
             throw new InvalidArgumentException($int . ' is not a valid integer');
-        } else {
-            $int = filter_var($int, FILTER_VALIDATE_INT);
         }
+
+        $int = filter_var($int, FILTER_VALIDATE_INT);
     }
 
     /**
