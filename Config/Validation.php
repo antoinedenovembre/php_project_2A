@@ -23,6 +23,18 @@ class Validation
         }
     }
 
+    public static function validDate(string & $date) : void
+    {
+        if (!isset($date) || empty($date = filter_var($date, FILTER_SANITIZE_STRING))) {
+            throw new InvalidArgumentException($date . ' is not a valid date');
+        }
+
+        $tmp = date_parse_from_format('Y-m-d', $date);
+        if ($tmp['error_count'] > 0) {
+            throw new InvalidArgumentException($date . ' is not a valid date');
+        }
+    }
+
     /**
      * @param mixed $int
      */
