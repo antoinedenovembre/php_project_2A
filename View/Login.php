@@ -21,7 +21,7 @@
 
 <body>
     <nav class="navbar navbar-light navbar-expand-lg navigation-clean-search" style="background: var(--bs-gray-800);color: var(--bs-green);">
-        <div class="container"><a class="navbar-brand" href="#">AutoNews</a><button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-1"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
+        <div class="container"><a class="navbar-brand" href="Home.php">AutoNews</a><button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-1"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
             <div class="collapse navbar-collapse" id="navcol-1">
                 <ul class="navbar-nav">
                     <li class="nav-item"></li>
@@ -35,9 +35,13 @@
         <form method="post">
             <h2 class="visually-hidden">Login Form</h2>
             <div class="illustration"><i class="icon ion-ios-locked-outline"></i></div>
-            <div class="mb-3"><input class="form-control" type="email" name="username" placeholder="Username"></div>
-            <div class="mb-3"><input class="form-control" type="password" name="password" placeholder="Password"></div>
-            <div class="mb-3"><button class="btn btn-primary d-block w-100" type="submit">Log In</button></div>
+            <div class="mb-3"><label>
+                    <input class="form-control" type="email" name="username" placeholder="Username">
+                </label></div>
+            <div class="mb-3"><label>
+                    <input class="form-control" type="password" name="password" placeholder="Password">
+                </label></div>
+            <div class="mb-3"><button class="btn btn-primary d-block w-100" type="submit">Se connecter</button></div>
         </form>
     </section>
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>
