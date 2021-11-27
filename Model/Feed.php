@@ -2,16 +2,16 @@
 
 class Feed {
     private string $title;
-    private string $feedUrl;
+    private string $url;
 
     /**
      * @param string $title
-     * @param string $feedUrl
+     * @param string $url
      */
-    public function __construct(string $title, string $feedUrl)
+    public function __construct(string $title, string $url)
     {
         $this->title = $title;
-        $this->feedUrl = $feedUrl;
+        $this->url = $url;
     }
 
     /**
@@ -25,8 +25,8 @@ class Feed {
     /**
      * @return string
      */
-    public function getFeedUrl(): string
+    public function getUrl(): string
     {
-        return $this->feedUrl;
+        return $this->url;
     }
 }

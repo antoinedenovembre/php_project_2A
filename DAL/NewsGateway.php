@@ -1,6 +1,6 @@
 <?php
 
-require_once('../Validation.php');
+require_once('../Config/config.php');
 require_once('Connection.php');
 
 class NewsGateway
@@ -88,7 +88,7 @@ class NewsGateway
     public function findByDate(string $date) : array
     {
         // récupère données côté db (preparation + exec grâce à Connection::executeQuery())
-        $query = 'SELECT * FROM News WHERE dateGet = :dateGet';
+        $query = 'SELECT * FROM news WHERE dateGet = :dateGet';
         $params = array(
             ':dateGet' => array($date, PDO::PARAM_STR)
         );
@@ -99,8 +99,22 @@ class NewsGateway
         $res = $this->con->getResults();
         $tabN = array();
         foreach ($res as $row) {
-            $tabN[] = new News($row['id'], $row['site'], $row['titre'], $row['dateGet'], $row['lien'], $row['isfrench']);
+            $tabN[] = new News($row['site'], $row['titre'], $row['dateGet'], $row['lien'], $row['isfrench']);
         }
+        return $tabN;
+    }
+
+    public function selectAll() : array
+    {
+        $query = 'SELECT * FROM news';
+        $this->con->executeQuery($query);
+
+        $res = $this->con->getResults();
+        $tabN = array();
+        foreach ($res as $row) {
+            $tabN[] = new News($row['site'], $row['titre'], $row['dateGet'], $row['lien'], $row['isfrench']);
+        }
+
         return $tabN;
     }
 }
