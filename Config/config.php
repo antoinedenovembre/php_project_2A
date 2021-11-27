@@ -2,9 +2,9 @@
     $rep = __DIR__ . '/../'; // Répertoire racine
 
     //Base de données
-    $dsn = "mysql:host=localhost:80;dbname=projet;";
+    $dsn = "mysql:host=localhost:80;dbname=Projet;";
     $user = "root";
-    $pass = ""; // à modifier en fonction de la config du serveur
+    $pass = "root"; // à modifier en fonction de la config du serveur
 
     //Vues
     $vues['Home'] = 'View/Home.php';
@@ -13,3 +13,5 @@
     $vues['ModifRSS'] = 'View/ModifRSS.php';
     $vues['DeleteRSS'] = 'View/DeleteRSS.php';
     $vues['Error'] = 'View/Error.php';
+
+    require('Autoload.php');
