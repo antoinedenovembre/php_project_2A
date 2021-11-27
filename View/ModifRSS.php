@@ -37,10 +37,11 @@
     <section class="newsletter-subscribe">
         <div class="container" style="padding: 25px;">
             <div class="intro">
-                <h2 class="text-center">Ajouter un flux RSS</h2>
+                <h2 class="text-center">Modifier un flux RSS</h2>
                 <p class="text-center">Collez ci-dessous un nouveau lien de flux RSS et ajoutez-le</p>
             </div>
             <form class="d-flex justify-content-center flex-wrap" method="post">
+                <div class="mb-3"><input class="form-control" type="text" name="title" placeholder="Titre du flux"></div>
                 <div class="mb-3"><input class="form-control" type="email" name="link" placeholder="Lien du flux RSS"></div>
                 <div class="mb-3"><button class="btn btn-primary" type="submit">Soumettre</button></div>
             </form>
