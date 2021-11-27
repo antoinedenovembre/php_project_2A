@@ -44,25 +44,23 @@ class NewsGateway
     }
 
     /**
-     * @param int $id
      * @param string $site
      * @param string $titre
      * @param string $dateGet
      * @param string $lien
      * @param bool $isfrench
      */
-    public function update(int $id, string $site, string $titre, string $dateGet, string $lien, bool $isfrench) : void
+    public function update(string $lien, string $site, string $titre, string $dateGet, bool $isfrench) : void
     {
         $query =    'UPDATE News 
-                    SET site = :site, titre = :titre, dateGet = :dateGet, lien = :lien, isfrench = :isfrench
-                    WHERE id = :id';
+                    SET site = :site, titre = :titre, dateGet = :dateGet, isfrench = :isfrench
+                    WHERE lien = :lien';
 
         $params = array(
-            ':id' => array($id, PDO::PARAM_INT),
+            ':lien' => array($lien, PDO::PARAM_STR),
             ':site' => array($site, PDO::PARAM_STR),
             ':titre' => array($titre, PDO::PARAM_STR),
             ':dateGet' => array($dateGet, PDO::PARAM_STR),
-            ':lien' => array($lien, PDO::PARAM_STR),
             ':isfrench' => array($isfrench, PDO::PARAM_BOOL)
         );
 
@@ -70,14 +68,14 @@ class NewsGateway
     }
 
     /**
-     * @param int $id
+     * @param string $lien
      */
-    public function delete(int $id) : void
+    public function delete(string $lien) : void
     {
-        $query = 'DELETE FROM News WHERE id = :id';
+        $query = 'DELETE FROM News WHERE lien = :lien';
 
         $params = array(
-            ':id' => array($id, PDO::PARAM_INT)
+            ':lien' => array($lien, PDO::PARAM_STR)
         );
 
         $this->con->executeQuery($query, $params);
@@ -87,7 +85,7 @@ class NewsGateway
      * @param string $date
      * @return array
      */
-    public function FindByDate(string $date) : array
+    public function findByDate(string $date) : array
     {
         // récupère données côté db (preparation + exec grâce à Connection::executeQuery())
         $query = 'SELECT * FROM News WHERE dateGet = :dateGet';

@@ -2,36 +2,34 @@
 
 class News {
 
-    private int $id;
     private string $site;
     private string $titre;
     private string $dateGet;
     private string $lien;
+    private bool $isfrench;
 
     /**
-     * @param int $id
+     * @param string $lien
      * @param string $site
      * @param string $titre
      * @param string $dateGet
-     * @param string $lien
      * @param bool $isfrench
      */
-    public function __construct(int $id, string $site, string $titre, string $dateGet, string $lien, bool $isfrench)
+    public function __construct(string $lien, string $site, string $titre, string $dateGet, bool $isfrench)
     {
-        $this->id = $id;
+        $this->lien = $lien;
         $this->site = $site;
         $this->titre = $titre;
         $this->dateGet = $dateGet;
-        $this->lien = $lien;
         $this->isfrench = $isfrench;
     }
 
     /**
-     * @return int
+     * @return string
      */
-    public function getId(): int
+    public function getLien(): string
     {
-        return $this->id;
+        return $this->lien;
     }
 
     /**
@@ -59,18 +57,9 @@ class News {
     }
 
     /**
-     * @return string
-     */
-    public function getLien(): string
-    {
-        return $this->lien;
-    }
-    private bool $isfrench;
-
-    /**
      * @return bool
      */
-    public function isIsfrench(): bool
+    public function isFrench(): bool
     {
         return $this->isfrench;
     }
