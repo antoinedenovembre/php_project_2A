@@ -10,7 +10,7 @@ class Connection extends PDO {
 	}
 
 	public function executeQuery(string $query, array $parameters = []) : bool{
-		$this->stmt = $this->prepare($query);
+		$this->stmt = parent::prepare($query);
 		foreach ($parameters as $name => $value) {
 			$this->stmt->bindValue($name, $value[0], $value[1]);
 		}
