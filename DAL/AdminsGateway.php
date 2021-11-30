@@ -13,23 +13,26 @@ class AdminsGateway
     }
 
     /**
-     * @param string $username
+     * @param string $mail
      * @param string $password
      */
-    public function update(string $username, string $password): void
+    public function update(string $mail, string $password): void
     {
         $query = 'UPDATE admins
-                    SET username = :username, password = :password
-                    WHERE username = :username';
+                    SET password = :password
+                    WHERE email = :mail';
 
         $params = array(
-            ':username' => array($username, PDO::PARAM_INT),
-            ':password' => array($password, PDO::PARAM_STR)
+            ':password' => array($password, PDO::PARAM_STR),
+            ':mail' => array($mail, PDO::PARAM_STR)
         );
 
         $this->con->executeQuery($query, $params);
     }
 
+    /**
+     * @return array
+     */
     public function selectAll() : array
     {
         $query = 'SELECT * FROM admins';

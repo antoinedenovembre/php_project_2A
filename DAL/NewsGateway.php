@@ -106,13 +106,14 @@ class NewsGateway
      */
     public function selectAll() : array
     {
+        require('Model/Classes/News.php');
         $query = 'SELECT * FROM news';
         $this->con->executeQuery($query);
 
         $res = $this->con->getResults();
         $tabN = array();
         foreach ($res as $row) {
-            $tabN[] = new News($row['site'], $row['titre'], $row['dateGet'], $row['lien'], $row['isfrench']);
+            $tabN[] = new News($row['lien'], $row['site'], $row['titre'], $row['dateGet'], $row['isfrench']);
         }
 
         return $tabN;
