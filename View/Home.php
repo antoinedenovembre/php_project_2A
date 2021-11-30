@@ -38,13 +38,60 @@
             <div class="col">
                 <nav class="d-xxl-flex justify-content-xxl-center" style="background: transparent;">
                     <ul class="pagination">
-                        <li class="page-item"><a class="page-link" href="#" aria-label="Previous"><span aria-hidden="true">«</span></a></li>
-                        <li class="page-item"><a class="page-link" href="#">1</a></li>
-                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                        <li class="page-item"><a class="page-link" href="#">4</a></li>
-                        <li class="page-item"><a class="page-link" href="#">5</a></li>
-                        <li class="page-item"><a class="page-link" href="#" aria-label="Next"><span aria-hidden="true">»</span></a></li>
+	                    <?php
+		                    if (isset($page) && isset($nbpage)) {
+			                    if ($page === 1 && $nbpage === 1) {
+
+				                    echo '<li class="page-item"><a class="page-link" href="index.php?page=1">1</a></li>';
+
+			                    } else if ($page < 4) {
+
+				                    if ($page !== 1) {
+					                    echo '<li class="page-item"><a class="page-link" href="index.php?page=' , $page - 1 , '" aria-label="Previous"><span aria-hidden="true">«</span></a></li>';
+				                    }
+				                    if ($nbpage < 8) {
+					                    for ($i = 1; $i < 8; $i++) {
+						                    echo '<li class="page-item"><a class="page-link" href="index.php?page=' . $i . '">' . $i . '</a></li>';
+					                    }
+				                    } else {
+					                    for ($i = 1; $i < 6; $i++) {
+						                    echo '<li class="page-item"><a class="page-link" href="index.php?page=' . $i . '">' . $i . '</a></li>';
+					                    }
+					                    echo '<li class="page-item">...</li>';
+					                    echo '<li class="page-item"><a class="page-link" href="index.php?page=' . $nbpage . '">' . $nbpage . '</a></li>';
+				                    }
+				                    echo '<li class="page-item"><a class="page-link" href="index.php?page=2" aria-label="Next"><span aria-hidden="true">»</span></a></li>';
+
+			                    } else if ($page > $nbpage - 4) {
+
+				                    echo '<li class="page-item"><a class="page-link" href="index.php?page=5" aria-label="Previous"><span aria-hidden="true">«</span></a></li>';
+				                    if ($nbpage < 8) {
+					                    for ($i = 1; $i < 8; $i++) {
+						                    echo '<li class="page-item"><a class="page-link" href="index.php?page=' . $i . '">' . $i . '</a></li>';
+					                    }
+				                    } else {
+					                    echo '<li class="page-item"><a class="page-link" href="index.php?page=1">1</a></li>';
+					                    echo '<li class="page-item">...</li>';
+					                    for ($i = $nbpage - 4; $i <= $nbpage; $i++) {
+						                    echo '<li class="page-item"><a class="page-link" href="index.php?page=' . $i . '">' . $i . '</a></li>';
+					                    }
+				                    } if ($page !== $nbpage) {
+					                    echo '<li class="page-item"><a class="page-link" href="index.php?page=' , $page + 1 , '" aria-label="Next"><span aria-hidden="true">»</span></a></li>';
+				                    }
+
+			                    } else {
+				                    echo '<li class="page-item"><a class="page-link" href="index.php?page=' , $page - 1 , '" aria-label="Previous"><span aria-hidden="true">«</span></a></li>';
+				                    echo '<li class="page-item"><a class="page-link" href="index.php?page=1">1</a></li>';
+				                    echo '<li class="page-item">...</li>';
+				                    echo '<li class="page-item"><a class="page-link" href="index.php?page=' , $page - 1 , '">' , $page - 1 , '</a></li>';
+				                    echo '<li class="page-item"><a class="page-link" href="index.php?page=' , $page , '">' , $page, '</a></li>';
+				                    echo '<li class="page-item"><a class="page-link" href="index.php?page=' , $page + 1 , '">' , $page + 1 , '</a></li>';
+				                    echo '<li class="page-item">...</li>';
+				                    echo '<li class="page-item"><a class="page-link" href="index.php?page=' , $nbpage , '">' , $nbpage, '</a></li>';
+				                    echo '<li class="page-item"><a class="page-link" href="index.php?page=' , $page + 1 , '" aria-label="Next"><span aria-hidden="true">»</span></a></li>';
+			                    }
+		                    }
+	                    ?>
                     </ul>
                 </nav>
             </div>
