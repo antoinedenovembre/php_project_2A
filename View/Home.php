@@ -28,10 +28,12 @@
         </div>
     </nav>
     <?php
-        foreach ($tabNews as $news) {
-            echo    '<div class="row">
-                        <h1>'.$news.getTitre().'</h1>
-                    </div>';
+        if (isset($tabNews)) {
+            foreach ($tabNews as $news) {
+                echo '<div class="row">
+                            <h1>' . $news . getTitre() . '</h1>
+                        </div>';
+            }
         }
     ?>
     <div class="row">
