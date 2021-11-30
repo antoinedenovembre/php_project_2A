@@ -20,6 +20,10 @@ class Controller
                     $this->GetNewsList();
                     break;
 
+                case 'login':
+                    $this->Login();
+                    break;
+
                 //mauvaise action
                 default:
                     $errorArr[] = "Bad php call";
@@ -38,13 +42,7 @@ class Controller
         exit(0);
     }
 
-    public function Reinit(): void {
-        global $rep, $vues;
-
-        require ($rep.$vues['Home']);
-    }
-
-    public function ValidationFormulaire(array $dVueErreur): void {
+    public function ValidationFormulaire(): void {
         global $rep, $vues;
 
     }
@@ -56,5 +54,11 @@ class Controller
         $tabNews = $mdl->getNews();
 
         require($rep.$vues['Home']);
+    }
+
+    public function Login() : void {
+        global $rep, $vues;
+
+        require($rep.$vues['Login']);
     }
 }

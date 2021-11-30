@@ -5,16 +5,10 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <title>php_project_2A</title>
-    <style>
-        <?php
-            include 'assets/bootstrap/css/bootstrap.min.css';
-            include 'assets/css/Navigation-with-Search.css';
-            include 'assets/css/styles.css';
-//            include 'https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css';
-
-        ?>
-    </style>
-    <link rel="stylesheet" type="text/css" href="assets/fonts/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="View/assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="View/assets/css/Navigation-with-Search.css">
+    <link rel="stylesheet" type="text/css" href="View/assets/css/styles.css">
+    <link rel="stylesheet" type="text/css" href="View/assets/fonts/font-awesome.min.css">
 </head>
 
 <body>
@@ -24,7 +18,7 @@
                 <form class="me-auto search-form" target="_self" style="background: transparent;color: rgb(255,255,255);">
                     <div class="d-flex align-items-center"><label class="form-label d-flex mb-0" for="search-field"></label><i class="fa fa-search"></i><input class="form-control search-field" type="search" id="search-field" name="search"></div>
                 </form>
-                <a class="btn btn-light action-button" role="button" style="background: var(--bs-green);">Se connecter</a>
+                <a class="btn btn-light action-button" role="button" style="background: var(--bs-green);" href="index.php?action=login">Se connecter</a>
             </div>
         </div>
     </nav>
@@ -39,7 +33,7 @@
             echo '<h1>VIDE</h1>';
         }
     ?>
-    <div class="container">
+    <div class="container fixed-bottom">
         <div class="row">
             <div class="col">
                 <nav class="d-xxl-flex justify-content-xxl-center" style="background: transparent;">
