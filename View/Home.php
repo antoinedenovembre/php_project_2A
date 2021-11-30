@@ -22,60 +22,18 @@
                 </ul>
                 <form class="me-auto search-form" target="_self" style="background: transparent;color: rgb(255,255,255);">
                     <div class="d-flex align-items-center"><label class="form-label d-flex mb-0" for="search-field"></label><i class="fa fa-search"></i><input class="form-control search-field" type="search" id="search-field" name="search"></div>
-                </form><a class="btn btn-light action-button" role="button" href="#" style="background: var(--bs-green);">Se connecter</a>
+                </form>
+                <a class="btn btn-light action-button" role="button" style="background: var(--bs-green);">Se connecter</a>
             </div>
         </div>
     </nav>
-    <div class="row">
-        <div class="col">
-            <div class="row"></div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col">
-            <div class="row"></div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col">
-            <div class="row"></div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col">
-            <div class="row"></div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col">
-            <div class="row"></div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col">
-            <div class="row"></div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col">
-            <div class="row"></div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col">
-            <div class="row"></div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col">
-            <div class="row"></div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col">
-            <div class="row"></div>
-        </div>
-    </div>
+    <?php
+        foreach ($tabNews as $news) {
+            echo    '<div class="row">
+                        <h1>'.$news.getTitre().'</h1>
+                    </div>';
+        }
+    ?>
     <div class="row">
         <div class="col">
             <nav class="d-xxl-flex justify-content-xxl-center" style="background: transparent;">

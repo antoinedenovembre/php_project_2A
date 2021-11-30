@@ -1,13 +1,13 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
         <title>php_project_2A</title>
-        <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
-        <link rel="stylesheet" href="assets/fonts/font-awesome.min.css">
-        <link rel="stylesheet" href="assets/css/Navigation-with-Search.css">
-        <link rel="stylesheet" href="assets/css/styles.css">
+        <link rel="stylesheet" type="text/css" href="./assets/bootstrap/css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="./assets/fonts/font-awesome.min.css">
+        <link rel="stylesheet" type="text/css" href="./assets/css/Navigation-with-Search.css">
+        <link rel="stylesheet" type="text/css" href="././assets/css/styles.css">
     </head>
     <body>
         <nav class="navbar navbar-light navbar-expand-lg navigation-clean-search" style="background: var(--bs-gray-800);color: var(--bs-green);">
@@ -26,8 +26,8 @@
         </nav>
         <h1>ERROR</h1>
         <?php
-            if (isset($dataVueErreur)) {
-                foreach ($dataVueErreur as $value) {
+            if (isset($errorArr)) {
+                foreach ($errorArr as $value) {
                     echo $value;
                 }
             }

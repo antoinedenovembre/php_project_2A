@@ -1,16 +1,13 @@
 <?php
 
-require_once('../Config/config.php');
-require_once('Connection.php');
-
 class NewsGateway
 {
     private Connection $con;
 
     /**
-     * @param $con
+     * @param Connection $con
      */
-    public function __construct($con)
+    public function __construct(Connection $con)
     {
         $this->con = $con;
     }
@@ -104,6 +101,9 @@ class NewsGateway
         return $tabN;
     }
 
+    /**
+     * @return array
+     */
     public function selectAll() : array
     {
         $query = 'SELECT * FROM news';

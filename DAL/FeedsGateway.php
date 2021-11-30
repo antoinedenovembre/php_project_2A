@@ -1,8 +1,5 @@
 <?php
 
-require_once('../Config/Validation.php');
-require_once('Connection.php');
-
 class FeedsGateway
 {
     private Connection $con;

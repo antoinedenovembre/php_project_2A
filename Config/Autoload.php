@@ -34,6 +34,7 @@ class Autoload
             $file=$rep.$d.$filename;
             if (file_exists($file)) {
                 include $file;
+                break;
             }
         }
     }
