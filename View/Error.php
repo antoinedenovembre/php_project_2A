@@ -4,15 +4,6 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
         <title>php_project_2A</title>
-
-<!--        <style>-->
-            <?php
-//            include 'assets/bootstrap/css/bootstrap.min.css';
-//            include 'assets/fonts/font-awesome.min.css';
-//            include 'assets/css/Navigation-with-Search.css';
-//            include 'assets/css/styles.css';
-             ?>
-<!--        </style>-->
         <link rel="stylesheet" type="text/css" href="View/assets/bootstrap/css/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="View/assets/fonts/font-awesome.min.css">
         <link rel="stylesheet" type="text/css" href="View/assets/css/Navigation-with-Search.css">
