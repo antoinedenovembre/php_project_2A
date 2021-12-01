@@ -29,7 +29,7 @@ class Autoload
     private static function _autoload($class) : void { // regarder avec le prof le fonctionnement
         global $rep;
         $filename = $class.'.php';
-        $dir =array('./','Config/','Controller/','DAL/','Model/','View/');
+        $dir =array('./', 'Config/', 'Controller/', 'DAL/', 'Model/', 'Model/Classes/', 'View/');
         foreach ($dir as $d) {
             $file=$rep.$d.$filename;
             if (file_exists($file)) {

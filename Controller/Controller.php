@@ -17,11 +17,11 @@ class Controller
             switch($action) {
                 //pas d'action, on reinitialise 1er appel
                 case NULL:
-                    $this->GetNewsList();
+                    $this->Init();
                     break;
 
                 case 'login':
-                    $this->Login();
+                    $this->LoginPage();
                     break;
 
                 //mauvaise action
@@ -42,21 +42,24 @@ class Controller
         exit(0);
     }
 
-    public function ValidationFormulaire(): void {
+    public function Login(): void {
         global $rep, $vues;
 
+		$mdl = new AdminModel();
     }
 
-    public function GetNewsList() : void {
+    public function Init() : void {
         global $rep, $vues;
 
         $mdl = new Model();
         $tabNews = $mdl->getNews();
+		$page = 1;
+		$nbpage = $mdl->getNbPage();
 
         require($rep.$vues['Home']);
     }
 
-    public function Login() : void {
+    public function LoginPage() : void {
         global $rep, $vues;
 
         require($rep.$vues['Login']);

@@ -9,12 +9,13 @@ class AdminModel
     /**
      * @return array
      */
-    public function connectionAdmin(Admin $a) : bool
+    public function connectionAdmin(string $username, string $password) : bool
     {
         global $dsn, $user, $pass;
 
         $gw = new AdminsGateway(new Connection($dsn, $user, $pass));
+		$a = new Admin($username, $password);
 
-        return in_array($a, $gw->selectAll(), true);
+        return $a == $gw->getByUsername($username);
     }
 }

@@ -106,7 +106,6 @@ class NewsGateway
      */
     public function selectAll() : array
     {
-        require('Model/Classes/News.php');
         $query = 'SELECT * FROM news';
         $this->con->executeQuery($query);
 
@@ -118,4 +117,18 @@ class NewsGateway
 
         return $tabN;
     }
+
+	/**
+	 * @return int
+	 */
+	public function getNbPage() : int
+	{
+		global $nbelem;
+
+		$query = 'SELECT COUNT(*) FROM news';
+		$this->con->executeQuery($query);
+		$res = $this->con->getResults();
+
+		return ceil($res[0][0] / $nbelem);
+	}
 }

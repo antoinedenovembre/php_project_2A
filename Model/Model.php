@@ -17,4 +17,15 @@ class Model
         $gw = new NewsGateway(new Connection($dsn, $user, $pass));
         return $gw->selectAll();
     }
+
+	/**
+	 * @return int
+	 */
+	public function getNbPage() : int
+	{
+		global $dsn, $user, $pass;
+
+		$gw = new NewsGateway(new Connection($dsn, $user, $pass));
+		return $gw->getNbPage();
+	}
 }

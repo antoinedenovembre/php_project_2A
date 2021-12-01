@@ -14,3 +14,5 @@
     $vues['DeleteRSS'] = 'View/DeleteRSS.php';
     $vues['Error'] = 'View/Error.php';
 
+	$nbelem = 10;
+
