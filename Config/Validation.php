@@ -58,4 +58,19 @@ class Validation
             $b = filter_var($b, FILTER_VALIDATE_BOOL);
         }
     }
+
+    public static function validePage(string|int & $page, int $nbPage) {
+        if (!isset($page) || empty($page = filter_var($page, FILTER_SANITIZE_NUMBER_INT))) {
+            throw new InvalidArgumentException($page . ' is not a valid integer');
+        }
+
+        if(!$page = filter_var($page, FILTER_VALIDATE_INT)) {
+            throw new InvalidArgumentException($page . ' is not a valid integer');
+        }
+
+        $page = (int)abs($page);
+        if ($page < 1 || $page > $nbPage) {
+            throw new InvalidArgumentException($page . ' is not a valid page');
+        }
+    }
 }
