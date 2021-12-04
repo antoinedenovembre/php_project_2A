@@ -18,15 +18,27 @@ class AdminController {
 					break;
 
 				case 'addRSS':
-					$this->addRSS();
+					$title = $_POST['title'];
+					$url = $_POST['url'];
+					$this->addRSS($url, $title);
+					break;
+
+				case 'addRSSPage':
+					$this->addRSSPage();
 					break;
 
 				case 'modifRSS':
-					$this->modifRSS();
+					$url = $_GET['feed'];
+					$this->modifRSS($url);
+					break;
+
+				case 'modifRSSPage':
+					$this->modifRSSPage();
 					break;
 
 				case 'deleteRSS':
-					$this->deleteRSS();
+					$url = $_GET['feed'];
+					$this->deleteRSS($url);
 					break;
 
 				default:
@@ -52,8 +64,47 @@ class AdminController {
 		$mdl = new Model();
 		$tabNews = $mdl->getNews();
 		$page = 1;
-		$nbpage = $mdl->getNbPage();
+		$nbPage = $mdl->getNbPage();
 
 		require($rep.$vues['Home']);
+	}
+
+	public function addRSS(string $url, string $title) : void {
+		global $rep, $vues;
+
+		$mdl = new AdminModel();
+		$null = $mdl->addRSS($url, $title);
+
+		require($rep.$vues['ListRSS']);
+	}
+
+	public function addRSSPage() : void {
+		global $rep, $vues;
+
+		require($rep.$vues['AddRSS']);
+	}
+
+	public function modifRSS(string $url, string $title) : void {
+		global $rep, $vues;
+
+		$mdl = new AdminModel();
+		$mdl->updateRSS($url, $title);
+
+		require($rep.$vues['ListRSS']);
+	}
+
+	public function modifRSSPage() : void {
+		global $rep, $vues;
+
+		require($rep.$vues['ModifRSS']);
+	}
+
+	public function deleteRSS(string $url) : void {
+		global $rep, $vues;
+
+		$mdl = new AdminModel();
+		$mdl->deleteRSS($url);
+
+		require($rep.$vues['ListRSS']);
 	}
 }

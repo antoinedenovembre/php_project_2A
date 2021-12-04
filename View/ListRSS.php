@@ -37,7 +37,7 @@
                 <a id="boxesChecked"></a>
             </li>
             <li class="list-inline-item">
-                <button href="index.php?action=addRSS" class="btn btn-success btn-sm rounded-0" type="button" data-placement="top" title="Add"><i class="fa fa-plus"></i></button>
+                <button href="index.php?action=addRSSPage" class="btn btn-success btn-sm rounded-0" type="button" data-placement="top" title="Add"><i class="fa fa-plus"></i></button>
             </li>
         </ul>
     </div>
@@ -52,7 +52,7 @@
                                     <a> --- Lien : ' . $feed->getUrl() . '</a>
                                     <ul class="list-inline mr-4">
                                         <li class="list-inline-item">
-                                            <button href="index.php?action=modifRSS&feed=' . $feed->getUrl() . '" class="btn btn-success btn-sm rounded-0" type="button" data-placement="top" title="Edit"><i class="fa fa-edit"></i></button>
+                                            <button href="index.php?action=modifRSSPage" class="btn btn-success btn-sm rounded-0" type="button" data-placement="top" title="Edit"><i class="fa fa-edit"></i></button>
                                         </li>
                                         <li class="list-inline-item">
                                             <button href="index.php?action=deleteRSS&feed=' . $feed->getUrl() . '" class="btn btn-danger btn-sm rounded-0" type="button" data-placement="top" title="Delete"><i class="fa fa-trash"></i></button>
