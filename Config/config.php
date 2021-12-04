@@ -11,7 +11,7 @@
     $vues['Login'] = 'View/Login.php';
     $vues['AddRSS'] = 'View/ModifRSS.php';
     $vues['ModifRSS'] = 'View/ModifRSS.php';
-    $vues['DeleteRSS'] = 'View/ListRSS.php';
+    $vues['ListRSS'] = 'View/ListRSS.php';
     $vues['Error'] = 'View/Error.php';
 
 	$nbelem = 10;

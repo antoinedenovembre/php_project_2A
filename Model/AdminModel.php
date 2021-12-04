@@ -18,4 +18,9 @@ class AdminModel
 
         return $a == $gw->getByUsername($username);
     }
+
+	public function isActor() : string
+	{
+		return "Admin";
+	}
 }

@@ -28,4 +28,9 @@ class Model
 		$gw = new NewsGateway(new Connection($dsn, $user, $pass));
 		return $gw->getNbPage();
 	}
+
+	public function isActor() : ?string
+	{
+		return null;
+	}
 }
