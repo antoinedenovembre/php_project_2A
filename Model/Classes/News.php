@@ -53,7 +53,11 @@ class News {
      */
     public function getDateGet(): string
     {
-        return $this->dateGet;
+	    $year = substr($this->dateGet, 0, -6);
+	    $month = substr($this->dateGet, 5, -3);
+	    $day = substr($this->dateGet, -2);
+
+		return "$day-$month-$year";
     }
 
     /**

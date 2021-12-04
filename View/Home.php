@@ -12,7 +12,7 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-light navbar-expand-lg navigation-clean-search" style="background: var(--bs-gray-800);color: var(--bs-green);">
+    <nav class="navbar navbar-light navbar-expand-lg navigation-clean-search fixed-top" style="background: var(--bs-gray-800);color: var(--bs-green);">
         <div class="container"><a class="navbar-brand" href="#">AutoNews</a><button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-1"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
             <div class="collapse navbar-collapse" id="navcol-1">
                 <form class="me-auto search-form" target="_self" style="background: transparent;color: rgb(255,255,255);">
@@ -22,17 +22,22 @@
             </div>
         </div>
     </nav>
-    <?php
-        if (isset($tabNews) && !empty($tabNews)) {
-            foreach ($tabNews as $news) {
-                echo '<div class="row">
-                            <h1>' . $news->getTitre() . '</h1>
-                        </div>';
-            }
-        } else {
-            echo '<h1>VIDE</h1>';
-        }
-    ?>
+    <div class="container">
+        <ul class="list-group mt-3">
+	        <?php
+		        if (isset($tabNews) && !empty($tabNews)) {
+			        foreach ($tabNews as $news) {
+				        echo    '<li class="list-group-item list-group-item-dark">
+                                    <a href="' . $news->getLien() . '">' . $news->getTitre() . '</a>
+                                    <a> --- Vu le ' . $news->getDateGet() . ' sur ' . $news->getSite() . '</a>
+                                </li>';
+			        }
+		        } else {
+			        echo '<h1>PAS DE NEWS</h1>';
+		        }
+	        ?>
+        </ul>
+    </div>
     <div class="container fixed-bottom">
         <div class="row">
             <div class="col">
@@ -41,40 +46,40 @@
 	                    <?php
 		                    if (isset($page, $nbpage)) {
                                 if ($nbpage === 1) {
-                                    echo '<li class="page-item"><a class="page-link" href="index.php?page=1">1</a></li>';
+                                    echo '<li class="page-item"><a class="page-link" href="index.php?action=findNews&page=1">1</a></li>';
                                 } else {
                                     if ($page !== 1) {
-                                        echo '<li class="page-item"><a class="page-link" href="index.php?page=', $page - 1, '" aria-label="Previous"><span aria-hidden="true">«</span></a></li>';
+                                        echo '<li class="page-item"><a class="page-link" href="index.php?action=findNews&page=', $page - 1, '" aria-label="Previous"><span aria-hidden="true">«</span></a></li>';
                                     }
 
                                     if ($nbpage < 8) {
                                         for ($i = 1; $i <= $nbpage; ++$i) {
-                                            echo '<li class="page-item"><a class="page-link" href="index.php?page=' . $i . '">' . $i . '</a></li>';
+                                            echo '<li class="page-item"><a class="page-link" href="index.php?action=findNews&page=' . $i . '">' . $i . '</a></li>';
                                         }
                                     } else if ($page < 4) {
                                         for ($i = 1; $i <= 5; ++$i) {
-                                            echo '<li class="page-item"><a class="page-link" href="index.php?page=' . $i . '">' . $i . '</a></li>';
+                                            echo '<li class="page-item"><a class="page-link" href="index.php?action=findNews&page=' . $i . '">' . $i . '</a></li>';
                                         }
                                         echo '<li class="page-item">...</li>';
-                                        echo '<li class="page-item"><a class="page-link" href="index.php?page=' . $nbpage . '">' . $nbpage . '</a></li>';
+                                        echo '<li class="page-item"><a class="page-link" href="index.php?action=findNews&page=' . $nbpage . '">' . $nbpage . '</a></li>';
                                     } else if ($page > $nbpage - 3) {
-                                        echo '<li class="page-item"><a class="page-link" href="index.php?page=1">1</a></li>';
+                                        echo '<li class="page-item"><a class="page-link" href="index.php?action=findNews&page=1">1</a></li>';
                                         echo '<li class="page-item">...</li>';
                                         for ($i = $nbpage - 4; $i <= $nbpage; ++$i) {
-                                            echo '<li class="page-item"><a class="page-link" href="index.php?page=' . $i . '">' . $i . '</a></li>';
+                                            echo '<li class="page-item"><a class="page-link" href="index.php?action=findNews&page=' . $i . '">' . $i . '</a></li>';
                                         }
                                     } else {
-                                        echo '<li class="page-item"><a class="page-link" href="index.php?page=1">1</a></li>';
+                                        echo '<li class="page-item"><a class="page-link" href="index.php?action=findNews&page=1">1</a></li>';
                                         echo '<li class="page-item"><a class="page-link" href="#">...</a></li>';
                                         for ($i = $page - 2; $i <= $page + 2; ++$i) {
-                                            echo '<li class="page-item"><a class="page-link" href="index.php?page=' . $i . '">' . $i . '</a></li>';
+                                            echo '<li class="page-item"><a class="page-link" href="index.php?action=findNews&page=' . $i . '">' . $i . '</a></li>';
                                         }
                                         echo '<li class="page-item">...</li>';
-                                        echo '<li class="page-item"><a class="page-link" href="index.php?page=' . $nbpage . '">' . $nbpage . '</a></li>';
+                                        echo '<li class="page-item"><a class="page-link" href="index.php?action=findNews&page=' . $nbpage . '">' . $nbpage . '</a></li>';
                                     }
 
                                     if ($page !== $nbpage) {
-                                        echo '<li class="page-item"><a class="page-link" href="index.php?page=', $page + 1, '" aria-label="Next"><span aria-hidden="true">»</span></a></li>';
+                                        echo '<li class="page-item"><a class="page-link" href="index.php?action=findNews&page=', $page + 1, '" aria-label="Next"><span aria-hidden="true">»</span></a></li>';
                                     }
                                 }
 		                    }

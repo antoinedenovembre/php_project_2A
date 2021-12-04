@@ -6,10 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <title>php_project_2A</title>
     <link rel="stylesheet" href="View/assets/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=ABeeZee">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Catamaran:100,200,300,400,500,600,700,800,900">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Muli">
     <link rel="stylesheet" href="View/assets/fonts/font-awesome.min.css">
     <link rel="stylesheet" href="View/assets/fonts/ionicons.min.css">
     <link rel="stylesheet" href="View/assets/css/LinkedIn-like-Profile-Box.css">
@@ -29,17 +25,40 @@
             </div><i class="icon ion-ios-locked-outline" style="width: 40px;height: 40px;justify-content: center;display: flex;align-items: center;"></i>
         </div>
     </nav>
-    <section class="newsletter-subscribe">
-        <div class="container" style="padding: 25px;">
-            <div class="intro">
-                <h2 class="text-center">Supprimer un flux RSS</h2>
-                <p class="text-center">Cliquez sur le bouton ci-dessous pour supprimer le flux</p>
-            </div>
-            <form class="d-flex justify-content-center flex-wrap" method="post">
-                <div class="mb-3"><button class="btn btn-primary" type="submit">Supprimer</button></div>
-            </form>
-        </div>
-    </section>
+    <!-- selected checkboxes counter -->
+    <script>
+        let nb = document.querySelectorAll('input[type="checkbox"]:checked').length;
+        let data = '<div class="container ml-4"> ${nb} </div>'
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;');
+
+        document.write(data);
+    </script>
+    <div class="container">
+        <ul class="list-group mt-3">
+		    <?php
+			    if (isset($tabRSS) && !empty($tabRSS)) {
+				    foreach ($tabRSS as $feed) {
+					    echo    '<li class="list-group-item list-group-item-dark">
+                                    <input type="checkbox">
+                                    <a>' . $feed->getTitle() . '</a>
+                                    <a> --- Lien : ' . $feed->getUrl() . '</a>
+                                    <ul class="list-inline mr-4">
+                                        <li class="list-inline-item">
+                                            <button href="index.php?action=modifRSS&feed=' . $feed->getUrl() . '" class="btn btn-success btn-sm rounded-0" type="button" data-placement="top" title="Edit"><i class="fa fa-edit"></i></button>
+                                        </li>
+                                        <li class="list-inline-item">
+                                            <button href="index.php?action=deleteRSS&feed=' . $feed->getUrl() . '" class="btn btn-danger btn-sm rounded-0" type="button" data-placement="top" title="Delete"><i class="fa fa-trash"></i></button>
+                                        </li>
+                                    </ul>
+                                </li>';
+				    }
+			    } else {
+				    echo '<h1>PAS DE FLUX</h1>';
+			    }
+		    ?>
+        </ul>
+    </div>
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>
 </body>
 
