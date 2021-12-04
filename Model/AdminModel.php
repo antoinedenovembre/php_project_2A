@@ -46,12 +46,36 @@ class AdminModel
 		$gw->update($title, $url);
 	}
 
+	/**
+	 * @param string $url
+	 * @return void
+	 */
 	public function deleteRSS(string $url) : void
 	{
 		global $dsn, $user, $pass;
 
 		$gw = new FeedsGateway(new Connection($dsn, $user, $pass));
 		$gw->delete($url);
+	}
+
+	/**
+	 * @return array
+	 */
+	public function getFeeds() : array
+	{
+		global $dsn, $user, $pass;
+
+		return (new FeedsGateway(new Connection($dsn, $user, $pass)))->selectAll();
+	}
+
+	/**
+	 * @return int
+	 */
+	public function getNbFeeds() : int
+	{
+		global $dsn, $user, $pass;
+
+		return (new FeedsGateway(new Connection($dsn, $user, $pass)))->getNbFeeds();
 	}
 
 	/**

@@ -29,7 +29,8 @@ class AdminController {
 
 				case 'modifRSS':
 					$url = $_GET['feed'];
-					$this->modifRSS($url);
+					$title = $_GET['title'];
+					$this->modifRSS($url, $title);
 					break;
 
 				case 'modifRSSPage':
@@ -48,11 +49,11 @@ class AdminController {
 			}
 
 		} catch (PDOException $e) {
-			$errorArr[] =	"Unexpected DB error";
+			$errorArr[] =	$e->getMessage();
 			require ($rep.$vues['Error']);
 		}
 		catch (Exception $e2) {
-			$errorArr[] =	"Unexpected error";
+			$errorArr[] =	$e2->getMessage();
 			require ($rep.$vues['Error']);
 		}
 		exit(0);
@@ -61,12 +62,12 @@ class AdminController {
 	public function Init() : void {
 		global $rep, $vues;
 
-		$mdl = new Model();
-		$tabNews = $mdl->getNews();
+		$mdl = new AdminModel();
+		$tabNews = $mdl->getFeeds();
 		$page = 1;
-		$nbPage = $mdl->getNbPage();
+		$nbPage = $mdl->getNbFeeds();
 
-		require($rep.$vues['Home']);
+		require($rep.$vues['ListRSS']);
 	}
 
 	public function addRSS(string $url, string $title) : void {

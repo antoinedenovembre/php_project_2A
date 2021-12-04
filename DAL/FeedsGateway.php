@@ -66,6 +66,9 @@ class FeedsGateway
         $this->con->executeQuery($query, $params);
     }
 
+	/**
+	 * @return array
+	 */
     public function selectAll() : array
     {
         $query = 'SELECT * FROM feeds';
@@ -79,4 +82,18 @@ class FeedsGateway
 
         return $tabN;
     }
+
+	/**
+	 * @return int
+	 */
+	public function getNbFeeds() : int
+	{
+		global $nbelem;
+
+		$query = 'SELECT COUNT(*) FROM admins';
+		$this->con->executeQuery($query);
+		$res = $this->con->getResults();
+
+		return ceil($res[0][0] / $nbelem);
+	}
 }
