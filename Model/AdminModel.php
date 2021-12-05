@@ -2,23 +2,31 @@
 
 class AdminModel
 {
-    public function __construct()
-    {
-    }
-
-	/**
-	 * @param string $username
-	 * @param string $password
-	 * @return bool
-	 */
-    public function connectionAdmin(string $username, string $password) : bool
+    /**
+     * @param string $username
+     * @param string $password
+     * @return Admin|null
+     */
+    public function getAdmin(string $username, string $password) : ?Admin
     {
         global $dsn, $user, $pass;
 
-        $gw = new AdminsGateway(new Connection($dsn, $user, $pass));
-		$a = new Admin($username, $password);
+        return (new AdminsGateway(new Connection($dsn, $user, $pass)))->selectAdmin($username, $password);
+    }
 
-        return $a === $gw->getByUsername($username);
+    /**
+     * @return Admin|null
+     */
+    public function isAdmin() : ?Admin
+    {
+        if(isset($_SESSION['role'], $_SESSION['username'])) {
+            $role = Validation::validString($_SESSION['role']);
+            $username = Validation::validString($_SESSION['username']);
+
+            return new Admin($role, $username);
+        }
+
+        return null;
     }
 
 	/**
@@ -76,13 +84,5 @@ class AdminModel
 		global $dsn, $user, $pass;
 
 		return (new FeedsGateway(new Connection($dsn, $user, $pass)))->getNbFeeds();
-	}
-
-	/**
-	 * @return string
-	 */
-	public function isActor() : string
-	{
-		return "Admin";
 	}
 }

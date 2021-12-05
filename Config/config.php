@@ -14,5 +14,5 @@
     $vues['ListRSS'] = 'View/ListRSS.php';
     $vues['Error'] = 'View/Error.php';
 
-	$nbelem = 10;
+	$nbElements = 10;
 

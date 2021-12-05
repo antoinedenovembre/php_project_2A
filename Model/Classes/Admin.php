@@ -2,17 +2,33 @@
 
 class Admin
 {
+    private string $role;
     private string $username;
-    private string $password;
 
-	/**
-	 * @param string $username
-	 * @param string $password
-	 */
-    public function __construct(string $username, string $password)
+    /**
+     * @param string $role
+     * @param string $username
+     */
+    public function __construct(string $role, string $username)
     {
-        $this->username = $username;
-        $this->password = $password;
+        $this->$role = $role;
+        $this->$username = $username;
+    }
+
+    /**
+     * @return string
+     */
+    public function getRole(): string
+    {
+        return $this->role;
+    }
+
+    /**
+     * @param string $role
+     */
+    public function setRole(string $role): void
+    {
+        $this->role = $role;
     }
 
     /**
@@ -24,10 +40,11 @@ class Admin
     }
 
     /**
-     * @return string
+     * @param string $username
      */
-    public function getPassword(): string
+    public function setUsername(string $username): void
     {
-        return $this->password;
+        $this->username = $username;
     }
 }
+

@@ -1,6 +1,7 @@
 <?php
 
-class Feed {
+class Feed
+{
     private string $title;
     private string $url;
 

@@ -2,18 +2,20 @@
 
 class AdminController {
 
-	public function __construct()
-	{
+	public function __construct(Admin $admin = null) {
 		global $rep, $vues;
-		session_start();
+        $errorArr = array ();
 
-		$errorArr = array ();
+        if (!isset($admin)) {
+            $errorArr[] = "You must be logged in to access this page";
+            require($rep . $vues['Error']);
+        }
+		session_start();
 
 		$action = $_GET['action'] ?? NULL;
 		try {
-
 			switch($action) {
-				case NULL:
+				case 'listRSS':
 					$this->Init();
 					break;
 
@@ -48,12 +50,8 @@ class AdminController {
 					break;
 			}
 
-		} catch (PDOException $e) {
+		} catch (Throwable $e) {
 			$errorArr[] =	$e->getMessage();
-			require ($rep.$vues['Error']);
-		}
-		catch (Exception $e2) {
-			$errorArr[] =	$e2->getMessage();
 			require ($rep.$vues['Error']);
 		}
 		exit(0);

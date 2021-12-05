@@ -12,62 +12,19 @@ class AdminsGateway
         $this->con = $con;
     }
 
-	/**
-	 * @param string $pseudo
-	 * @param string $password
-	 */
-    public function update(string $pseudo, string $password): void
+    public function selectAdmin(string $username, string $password) : ?Admin
     {
-        $query = 'UPDATE admins
-                    SET password = :password
-                    WHERE username = :pseudo';
+        $sql = "SELECT * FROM admins WHERE username = :username AND password = :password";
+        $this->con->executeQuery($sql, [
+            'username' => array($username, PDO::PARAM_STR),
+            'password' => array($password, PDO::PARAM_STR)
+        ]);
 
-        $params = array(
-            ':password' => array($password, PDO::PARAM_STR),
-            ':pseudo' => array($pseudo, PDO::PARAM_STR)
-        );
-
-        $this->con->executeQuery($query, $params);
-    }
-
-    /**
-     * @return array
-     */
-    public function selectAll() : array
-    {
-        $query = 'SELECT * FROM admins';
-        $this->con->executeQuery($query);
-
-        $res = $this->con->getResults();
-        $tabN = array();
-        foreach ($res as $row) {
-            $tabN[] = new Admin($row['username'], $row['password']);
+        $result = $this->con->getResults();
+        if (empty($result)) {
+            return null;
         }
 
-        return $tabN;
+        return new Admin('admin', $result[0]['username']);
     }
-
-	/**
-	 * @param string $username
-	 * @return Admin
-	 */
-	public function getByUsername(string $username) : Admin
-	{
-		$query =    'SELECT * FROM admins
-					WHERE username = :username';
-
-		$params = array(
-			':username' => array($username, PDO::PARAM_STR)
-		);
-
-		$this->con->executeQuery($query, $params);
-
-		$res = $this->con->getResults();
-		$tabN = array();
-		foreach ($res as $row) {
-			$tabN[] = new Admin($row['username'], $row['password']);
-		}
-
-		return $tabN[0];
-	}
 }

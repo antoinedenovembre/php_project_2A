@@ -16,16 +16,16 @@
         <div class="container"><a class="navbar-brand" href="#">AutoNews</a><button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-1"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
             <div class="collapse navbar-collapse" id="navcol-1">
                 <form class="me-auto search-form" target="_self" style="background: transparent;color: rgb(255,255,255);">
-                    <div class="d-flex align-items-center"><label class="form-label d-flex mb-0" for="search-field"></label><i class="fa fa-search"></i><input class="form-control search-field" type="search" id="search-field" name="search"></div>
+                    <div class="d-flex align-items-center"><label class="form-label d-flex mb-0" for="search-field"></label><i class="fa fa-search"></i><input class="form-control search-field" type="text" id="search-field" name="value"></div>
                 </form>
-                <a class="btn btn-light action-button" role="button" style="background: var(--bs-green);" href="index.php?action=login">Se connecter</a>
+                <a class="btn btn-light action-button" role="button" style="background: var(--bs-green);" href="index.php?action=loginPage">Se connecter</a>
             </div>
         </div>
     </nav>
     <div class="container">
         <ul class="list-group mt-3">
 	        <?php
-		        if (isset($tabNews) && !empty($tabNews)) {
+		        if (!empty($tabNews)) {
 			        foreach ($tabNews as $news) {
 				        echo    '<li class="list-group-item list-group-item-dark">
                                     <a href="' . $news->getLien() . '">' . $news->getTitre() . '</a>
@@ -44,16 +44,16 @@
                 <nav class="d-xxl-flex justify-content-xxl-center" style="background: transparent;">
                     <ul class="pagination">
 	                    <?php
-		                    if (isset($page, $nbpage)) {
-                                if ($nbpage === 1) {
-                                    echo '<li class="page-item"><a class="page-link" href="index.php?action=findNews&page=1">1</a></li>';
+		                    if (isset($page, $nbPage)) {
+                                if ($nbPage <= 1) {
+                                    echo '<li class="page-item">1</li>';
                                 } else {
                                     if ($page !== 1) {
                                         echo '<li class="page-item"><a class="page-link" href="index.php?action=findNews&page=', $page - 1, '" aria-label="Previous"><span aria-hidden="true">«</span></a></li>';
                                     }
 
-                                    if ($nbpage < 8) {
-                                        for ($i = 1; $i <= $nbpage; ++$i) {
+                                    if ($nbPage < 8) {
+                                        for ($i = 1; $i <= $nbPage; ++$i) {
                                             echo '<li class="page-item"><a class="page-link" href="index.php?action=findNews&page=' . $i . '">' . $i . '</a></li>';
                                         }
                                     } else if ($page < 4) {
@@ -61,11 +61,11 @@
                                             echo '<li class="page-item"><a class="page-link" href="index.php?action=findNews&page=' . $i . '">' . $i . '</a></li>';
                                         }
                                         echo '<li class="page-item">...</li>';
-                                        echo '<li class="page-item"><a class="page-link" href="index.php?action=findNews&page=' . $nbpage . '">' . $nbpage . '</a></li>';
-                                    } else if ($page > $nbpage - 3) {
+                                        echo '<li class="page-item"><a class="page-link" href="index.php?action=findNews&page=' . $nbPage . '">' . $nbPage . '</a></li>';
+                                    } else if ($page > $nbPage - 3) {
                                         echo '<li class="page-item"><a class="page-link" href="index.php?action=findNews&page=1">1</a></li>';
                                         echo '<li class="page-item">...</li>';
-                                        for ($i = $nbpage - 4; $i <= $nbpage; ++$i) {
+                                        for ($i = $nbPage - 4; $i <= $nbPage; ++$i) {
                                             echo '<li class="page-item"><a class="page-link" href="index.php?action=findNews&page=' . $i . '">' . $i . '</a></li>';
                                         }
                                     } else {
@@ -75,10 +75,10 @@
                                             echo '<li class="page-item"><a class="page-link" href="index.php?action=findNews&page=' . $i . '">' . $i . '</a></li>';
                                         }
                                         echo '<li class="page-item">...</li>';
-                                        echo '<li class="page-item"><a class="page-link" href="index.php?action=findNews&page=' . $nbpage . '">' . $nbpage . '</a></li>';
+                                        echo '<li class="page-item"><a class="page-link" href="index.php?action=findNews&page=' . $nbPage . '">' . $nbPage . '</a></li>';
                                     }
 
-                                    if ($page !== $nbpage) {
+                                    if ($page !== $nbPage) {
                                         echo '<li class="page-item"><a class="page-link" href="index.php?action=findNews&page=', $page + 1, '" aria-label="Next"><span aria-hidden="true">»</span></a></li>';
                                     }
                                 }

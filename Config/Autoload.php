@@ -4,7 +4,8 @@ class Autoload
 {
     private static Autoload|null $_instance = null;
 
-    public static function start() : void {
+    public static function start() : void
+    {
         if(null !== self::$_instance) {
             throw new RuntimeException(__CLASS__ . 'is already started');
         }
@@ -16,7 +17,8 @@ class Autoload
         }
     }
 
-    public static function shutDown() : void {
+    public static function shutDown() : void
+    {
         if(null !== self::$_instance) {
             if(!spl_autoload_unregister(array(self::$_instance, '_autoload'))) {
                 throw new RuntimeException('Could not stop the autoload');
@@ -26,7 +28,8 @@ class Autoload
         }
     }
 
-    private static function _autoload($class) : void { // regarder avec le prof le fonctionnement
+    private static function _autoload($class) : void
+    {
         global $rep;
         $filename = $class.'.php';
         $dir =array('./', 'Config/', 'Controller/', 'DAL/', 'Model/', 'Model/Classes/', 'View/');

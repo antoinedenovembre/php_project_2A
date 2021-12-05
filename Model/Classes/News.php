@@ -1,7 +1,7 @@
 <?php
 
-class News {
-
+class News
+{
     private string $site;
     private string $titre;
     private string $dateGet;

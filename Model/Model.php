@@ -2,20 +2,15 @@
 
 class Model
 {
-
-    public function __construct()
-    {
-    }
-
     /**
+     * @param int $page
      * @return array
      */
-    public function getNews() : array
+    public function getNews(int $page) : array
     {
         global $dsn, $user, $pass;
 
-        $gw = new NewsGateway(new Connection($dsn, $user, $pass));
-        return $gw->selectAll();
+        return (new NewsGateway(new Connection($dsn, $user, $pass)))->selectNews($page);
     }
 
 	/**
@@ -25,12 +20,6 @@ class Model
 	{
 		global $dsn, $user, $pass;
 
-		$gw = new NewsGateway(new Connection($dsn, $user, $pass));
-		return $gw->getNbPage();
-	}
-
-	public function isActor() : ?string
-	{
-		return null;
+        return (new NewsGateway(new Connection($dsn, $user, $pass)))->getNbPage();
 	}
 }

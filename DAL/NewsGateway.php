@@ -102,12 +102,17 @@ class NewsGateway
     }
 
     /**
+     * @param string $page
      * @return array
      */
-    public function selectAll() : array
+    public function selectNews(string $page) : array
     {
-        $query = 'SELECT * FROM news';
-        $this->con->executeQuery($query);
+        global $nbElements;
+        $query = 'SELECT * FROM news LIMIT :page, :nbElements';
+        $this->con->executeQuery($query,[
+            ':page' => array((($page -1) * $nbElements), PDO::PARAM_INT),
+            ':nbElements' => array($nbElements, PDO::PARAM_INT)
+        ]);
 
         $res = $this->con->getResults();
         $tabN = array();
@@ -123,12 +128,12 @@ class NewsGateway
 	 */
 	public function getNbPage() : int
 	{
-		global $nbelem;
+		global $nbElements;
 
 		$query = 'SELECT COUNT(*) FROM news';
 		$this->con->executeQuery($query);
 		$res = $this->con->getResults();
 
-		return ceil($res[0][0] / $nbelem);
+		return ceil($res[0][0] / $nbElements);
 	}
 }

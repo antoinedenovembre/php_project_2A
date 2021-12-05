@@ -24,16 +24,26 @@
             </button>
         </div>
     </nav>
+    <?php
+        if (isset($error)) {
+            echo '<div class="alert alert-danger text-center" role="alert">
+                    <strong>Users or password is not correct</strong>
+                  </div>';
+        }
+    ?>
     <section class="login-dark">
-        <form action="index.php?action=submitForm" method="post">
-            <h2 class="visually-hidden">Login Form</h2>
+        <form action="index.php?action=login" method="post">
             <div class="illustration"><i class="icon ion-ios-locked-outline"></i></div>
-            <div class="mb-3"><label>
-                    <input class="form-control" type="email" name="username" placeholder="Username">
-                </label></div>
-            <div class="mb-3"><label>
+            <div class="mb-3">
+                <label>
+                    <input class="form-control" type="text" name="username" placeholder="Username" value="<?php if (isset($username)) {echo $username;} ?>">
+                </label>
+            </div>
+            <div class="mb-3">
+                <label>
                     <input class="form-control" type="password" name="password" placeholder="Password">
-                </label></div>
+                </label>
+            </div>
             <div class="mb-3"><button class="btn btn-primary d-block w-100" type="submit">Se connecter</button></div>
         </form>
     </section>

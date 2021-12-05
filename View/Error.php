@@ -15,17 +15,19 @@
                 <div class="collapse navbar-collapse" id="navcol-1">
                     <form class="me-auto search-form" target="_self" style="background: transparent;color: rgb(255,255,255);">
                         <div class="d-flex align-items-center"><label class="form-label d-flex mb-0" for="search-field"></label><i class="fa fa-search"></i><input class="form-control search-field" type="search" id="search-field" name="search"></div>
-                    </form><a class="btn btn-light action-button" role="button" href="index.php?action=login" style="background: var(--bs-green);">Se connecter</a>
+                    </form><a class="btn btn-light action-button" role="button" href="index.php?action=loginPage" style="background: var(--bs-green);">Se connecter</a>
                 </div>
             </div>
         </nav>
-        <h1>ERROR</h1>
-        <?php
+        <div class="text-center">
+            <h1>ERROR</h1>
+            <?php
             if (isset($errorArr)) {
                 foreach ($errorArr as $value) {
                     echo $value;
                 }
             }
-        ?>
+            ?>
+        </div>
     </body>
 </html>
