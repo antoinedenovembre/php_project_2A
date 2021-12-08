@@ -11,8 +11,8 @@ class Admin
      */
     public function __construct(string $role, string $username)
     {
-        $this->$role = $role;
-        $this->$username = $username;
+        $this->role = $role;
+        $this->username = $username;
     }
 
     /**

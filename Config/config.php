@@ -4,7 +4,7 @@
     //Base de données
     $dsn = "mysql:host=localhost;dbname=projet;";
     $user = "root";
-    $pass = "root"; // à modifier en fonction de la config du serveur
+    $pass = "5W3PyR11YaHx!weU12l3JqCTWkT&AQersUurocMJ"; // à modifier en fonction de la config du serveur
 
     //Vues
     $vues['Home'] = 'View/Home.php';

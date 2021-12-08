@@ -69,20 +69,20 @@ class AdminModel
 	/**
 	 * @return array
 	 */
-	public function getFeeds() : array
+	public function getFeeds(int $page) : array
 	{
 		global $dsn, $user, $pass;
 
-		return (new FeedsGateway(new Connection($dsn, $user, $pass)))->selectAll();
+		return (new FeedsGateway(new Connection($dsn, $user, $pass)))->selectFeeds($page);
 	}
 
 	/**
 	 * @return int
 	 */
-	public function getNbFeeds() : int
+	public function getNbPage() : int
 	{
 		global $dsn, $user, $pass;
 
-		return (new FeedsGateway(new Connection($dsn, $user, $pass)))->getNbFeeds();
+		return (new FeedsGateway(new Connection($dsn, $user, $pass)))->getNbPage();
 	}
 }

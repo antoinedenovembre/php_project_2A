@@ -10,8 +10,6 @@ class AdminController {
             $errorArr[] = "You must be logged in to access this page";
             require($rep . $vues['Error']);
         }
-		session_start();
-
 		$action = $_GET['action'] ?? NULL;
 		try {
 			switch($action) {
@@ -61,9 +59,9 @@ class AdminController {
 		global $rep, $vues;
 
 		$mdl = new AdminModel();
-		$tabNews = $mdl->getFeeds();
-		$page = 1;
-		$nbPage = $mdl->getNbFeeds();
+        $page = 1;
+        $tabFeeds = $mdl->getFeeds($page);
+		$nbPage = $mdl->getNbPage();
 
 		require($rep.$vues['ListRSS']);
 	}

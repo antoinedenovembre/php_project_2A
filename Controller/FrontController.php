@@ -15,7 +15,7 @@ class FrontController
 
 			$controller = array_search($_GET['action'], $actionList, true);
 
-			if ($controller === 'Visitor') {
+			if (!$controller || $controller === 'Visitor') {
 				new Controller();
 			} else {
 				$mdl = new AdminModel();

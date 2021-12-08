@@ -24,7 +24,6 @@ class AdminsGateway
         if (empty($result)) {
             return null;
         }
-
         return new Admin('admin', $result[0]['username']);
     }
 }
