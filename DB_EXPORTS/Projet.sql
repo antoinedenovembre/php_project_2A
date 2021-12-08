@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.1
+-- version 5.1.0
 -- https://www.phpmyadmin.net/
 --
--- Hôte : 127.0.0.1:3306
--- Généré le : sam. 27 nov. 2021 à 17:58
--- Version du serveur : 8.0.27
--- Version de PHP : 8.0.13
+-- Hôte : localhost:8889
+-- Généré le : mer. 08 déc. 2021 à 13:28
+-- Version du serveur :  5.7.34
+-- Version de PHP : 8.0.8
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -27,13 +27,17 @@ SET time_zone = "+00:00";
 -- Structure de la table `admins`
 --
 
-DROP TABLE IF EXISTS `admins`;
-CREATE TABLE IF NOT EXISTS `admins` (
-  `email` varchar(40) NOT NULL,
+CREATE TABLE `admins` (
   `username` varchar(20) NOT NULL,
-  `password` varchar(40) NOT NULL,
-  PRIMARY KEY (`email`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+  `password` varchar(40) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Déchargement des données de la table `admins`
+--
+
+INSERT INTO `admins` (`username`, `password`) VALUES
+('admin', 'password');
 
 -- --------------------------------------------------------
 
@@ -41,12 +45,10 @@ CREATE TABLE IF NOT EXISTS `admins` (
 -- Structure de la table `feeds`
 --
 
-DROP TABLE IF EXISTS `feeds`;
-CREATE TABLE IF NOT EXISTS `feeds` (
+CREATE TABLE `feeds` (
   `url` varchar(100) NOT NULL,
-  `title` varchar(65) NOT NULL,
-  PRIMARY KEY (`url`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+  `title` varchar(65) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -54,15 +56,42 @@ CREATE TABLE IF NOT EXISTS `feeds` (
 -- Structure de la table `news`
 --
 
-DROP TABLE IF EXISTS `news`;
-CREATE TABLE IF NOT EXISTS `news` (
+CREATE TABLE `news` (
   `lien` varchar(100) NOT NULL,
   `site` varchar(20) NOT NULL,
   `titre` varchar(75) NOT NULL,
   `dateGet` date NOT NULL,
-  `isfrench` tinyint(1) NOT NULL,
-  PRIMARY KEY (`lien`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+  `isfrench` tinyint(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Déchargement des données de la table `news`
+--
+
+INSERT INTO `news` (`lien`, `site`, `titre`, `dateGet`, `isfrench`) VALUES
+('https://www.jeuxvideo.com/preview/1493343/wartales-un-rpg-medieval-qui-vous-veut-du-mal.htm', 'jeuxvideo.com', 'Wartales', '2021-11-30', 1);
+
+--
+-- Index pour les tables déchargées
+--
+
+--
+-- Index pour la table `admins`
+--
+ALTER TABLE `admins`
+  ADD PRIMARY KEY (`username`);
+
+--
+-- Index pour la table `feeds`
+--
+ALTER TABLE `feeds`
+  ADD PRIMARY KEY (`url`);
+
+--
+-- Index pour la table `news`
+--
+ALTER TABLE `news`
+  ADD PRIMARY KEY (`lien`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

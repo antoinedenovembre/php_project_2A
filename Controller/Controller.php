@@ -7,7 +7,7 @@ class Controller
     {
         global $rep, $vues; // nécessaire pour utiliser variables globales
         // on démarre ou reprend la session si nécessaire (préférez utiliser un modèle pour gérer votre session ou cookies)
-        session_start();
+
 
 
         //on initialise un tableau d'erreur
@@ -88,6 +88,8 @@ class Controller
 
         $adminMdl = new AdminModel();
         $admin = $adminMdl->getAdmin($username, $password);
+
+		var_dump($admin);
 
         if($admin !== NULL) {
             $_SESSION['role'] = $admin->getRole();

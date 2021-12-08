@@ -14,10 +14,10 @@ class AdminsGateway
 
     public function selectAdmin(string $username, string $password) : ?Admin
     {
-        $sql = "SELECT * FROM admins WHERE username = :username AND password = :password";
-        $this->con->executeQuery($sql, [
-            'username' => array($username, PDO::PARAM_STR),
-            'password' => array($password, PDO::PARAM_STR)
+        $query = "SELECT * FROM admins WHERE username = :username AND password = :password";
+        $this->con->executeQuery($query, [
+            ':username' => array($username, PDO::PARAM_STR),
+            ':password' => array($password, PDO::PARAM_STR)
         ]);
 
         $result = $this->con->getResults();

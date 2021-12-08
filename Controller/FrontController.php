@@ -18,8 +18,9 @@ class FrontController
 			if ($controller === 'Visitor') {
 				new Controller();
 			} else {
-                $admin = (new AdminModel())->isAdmin();
-                if($admin) {
+				$mdl = new AdminModel();
+                $admin = $mdl->isAdmin();
+                if(isset($admin)) {
                     new AdminController($admin);
                 } else {
                     $_GET['action'] = 'loginPage';
