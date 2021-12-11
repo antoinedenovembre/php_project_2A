@@ -57,8 +57,6 @@
                     selected.push(i, urls[i].getAttribute("href"));
                 }
             }
-
-
         }
     </script>
     <div class="container">
