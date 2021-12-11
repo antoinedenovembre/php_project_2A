@@ -40,12 +40,10 @@ class FeedsGateway
      */
     public function update(string $title, string $url): void
     {
-        $query = 'UPDATE feeds 
-                    SET title = :title, url = :url
-                    WHERE url = :url';
+        $query = "UPDATE feeds SET title = :title WHERE url = :url";
 
         $params = array(
-            ':title' => array($title, PDO::PARAM_INT),
+            ':title' => array($title, PDO::PARAM_STR),
             ':url' => array($url, PDO::PARAM_STR)
         );
 
@@ -60,7 +58,7 @@ class FeedsGateway
         $query = 'DELETE FROM feeds WHERE url = :url';
 
         $params = array(
-            ':url' => array($url, PDO::PARAM_INT)
+            ':url' => array($url, PDO::PARAM_STR)
         );
 
         $this->con->executeQuery($query, $params);

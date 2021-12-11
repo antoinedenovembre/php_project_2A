@@ -28,8 +28,8 @@ class AdminController {
 					break;
 
 				case 'modifRSS':
-					$url = $_GET['feed'];
-					$title = $_GET['title'];
+					$url = $_POST['url'];
+					$title = $_POST['title'];
 					$this->modifRSS($url, $title);
 					break;
 
@@ -41,6 +41,16 @@ class AdminController {
 					$url = $_GET['feed'];
 					$this->deleteRSS($url);
 					break;
+
+				case 'delSelectRSS':
+					if (isset($_POST['json-data'])) {
+						$arr = json_decode($_POST['json-data'], true, 512, JSON_THROW_ON_ERROR);
+						echo json_encode($arr, JSON_THROW_ON_ERROR);
+					} else {
+						$_GET['action'] = 'listRSS';
+					}
+					break;
+
 
 				default:
 					$errorArr[] = "Bad php call";
@@ -67,41 +77,54 @@ class AdminController {
 	}
 
 	public function addRSS(string $url, string $title) : void {
-		global $rep, $vues;
 
 		$mdl = new AdminModel();
-		$null = $mdl->addRSS($url, $title);
+		$mdl->addRSS($url, $title);
 
-		require($rep.$vues['ListRSS']);
+		header('Location: index.php?action=listRSS');
 	}
 
 	public function addRSSPage() : void {
 		global $rep, $vues;
 
+		$title = NULL;
+		$url = NULL;
+
 		require($rep.$vues['AddRSS']);
 	}
 
 	public function modifRSS(string $url, string $title) : void {
-		global $rep, $vues;
 
 		$mdl = new AdminModel();
 		$mdl->updateRSS($url, $title);
 
-		require($rep.$vues['ListRSS']);
+		header('Location: index.php?action=listRSS');
 	}
 
 	public function modifRSSPage() : void {
 		global $rep, $vues;
 
+		$title = $_GET['title'];
+		$url = $_GET['feed'];
+
 		require($rep.$vues['ModifRSS']);
 	}
 
 	public function deleteRSS(string $url) : void {
-		global $rep, $vues;
 
 		$mdl = new AdminModel();
 		$mdl->deleteRSS($url);
 
-		require($rep.$vues['ListRSS']);
+		header('Location: index.php?action=listRSS');
+	}
+
+	public function delSelectRSS(array $urls) : void {
+
+		$mdl = new AdminModel();
+		foreach($urls as $url) {
+			$mdl->deleteRSS($url);
+		}
+
+		header('Location: index.php?action=listRSS');
 	}
 }

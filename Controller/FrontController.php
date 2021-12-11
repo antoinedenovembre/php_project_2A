@@ -10,15 +10,16 @@ class FrontController
 		try {
 			$actionList = array(
 				'Visitor' => array(null, 'loginPage', 'login'),
-				'Admin' => array('listRSS', 'addRSS', 'deleteRSS', 'modifRSS')
+				'Admin' => array('listRSS', 'addRSS', 'addRSSPage', 'deleteRSS', 'delSelectRSS', 'modifRSS', 'modifRSSPage')
 			);
 
-            foreach ($actionList as $role => $actions) {
-                if (in_array($_GET['action'], $actions, true)) {
-                    $controller = $role;
-                    break;
-                }
-            }
+			$action = $_GET['action'] ?? null;
+			foreach ($actionList as $role => $actions) {
+				if (in_array($action, $actions, true)) {
+					$controller = $role;
+					break;
+				}
+			}
 
 			if (!isset($controller) || $controller === 'Visitor') {
 				new Controller();

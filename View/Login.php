@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="View/assets/css/styles.css">
 </head>
 
-<body>
+<body class="overflow-hidden">
     <nav class="navbar navbar-light navbar-expand-lg navigation-clean-search" style="background: var(--bs-gray-800);color: var(--bs-green);">
         <div class="container">
             <a class="navbar-brand" href="index.php">AutoNews</a>

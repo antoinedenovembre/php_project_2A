@@ -12,7 +12,7 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-light navbar-expand-lg navigation-clean-search fixed-top" style="background: var(--bs-gray-800);color: var(--bs-green);">
+    <nav class="navbar navbar-light navbar-expand-lg navigation-clean-search navbar-static-top" style="background: var(--bs-gray-800);color: var(--bs-green);">
         <div class="container"><a class="navbar-brand" href="#">AutoNews</a><button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-1"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
             <div class="collapse navbar-collapse" id="navcol-1">
                 <form class="me-auto search-form" target="_self" style="background: transparent;color: rgb(255,255,255);">
@@ -51,7 +51,6 @@
                                     if ($page !== 1) {
                                         echo '<li class="page-item"><a class="page-link" href="index.php?action=findNews&page=', $page - 1, '" aria-label="Previous"><span aria-hidden="true">«</span></a></li>';
                                     }
-
                                     if ($nbPage < 8) {
                                         for ($i = 1; $i <= $nbPage; ++$i) {
                                             echo '<li class="page-item"><a class="page-link" href="index.php?action=findNews&page=' . $i . '">' . $i . '</a></li>';

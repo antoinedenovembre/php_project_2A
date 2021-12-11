@@ -32,15 +32,14 @@
     <section class="newsletter-subscribe">
         <div class="container" style="padding: 25px;">
             <div class="intro">
-                <h2 class="text-center">Modifier un flux RSS</h2>
-                <p class="text-center">Collez ci-dessous un nouveau lien de flux RSS et ajoutez-le</p>
+                <h2 class="text-center"><?php if (isset($title, $url)) {echo 'Modifier';} else {echo 'Ajouter';} ?> un flux RSS</h2>
             </div>
-            <form class="d-flex justify-content-center flex-wrap" method="post">
+            <form action="index.php?action=<?php if (isset($title, $url)) {echo 'modifRSS';} else {echo 'addRSS';} ?>" class="d-flex justify-content-center flex-wrap" method="post">
                 <div class="mb-3"><label>
-                        <input class="form-control" type="text" name="title" placeholder="Titre du flux">
+                        <input class="form-control" type="text" name="title" required value="<?php if (isset($title)) {echo $title;} ?>" placeholder="Titre du flux">
                     </label></div>
                 <div class="mb-3"><label>
-                        <input class="form-control" type="email" name="link" placeholder="Lien du flux RSS">
+                        <input class="form-control" type="url" name="url" required value="<?php if (isset($url)) {echo $url;} ?>" placeholder="Lien du flux RSS">
                     </label></div>
                 <div class="mb-3"><button class="btn btn-primary" type="submit">Soumettre</button></div>
             </form>
