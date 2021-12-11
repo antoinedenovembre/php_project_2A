@@ -89,14 +89,10 @@ class Controller
         $adminMdl = new AdminModel();
         $admin = $adminMdl->getAdmin($username, $password);
 
-//		var_dump($admin);
-
         if(isset($admin)) {
             $_SESSION['role'] = $admin->getRole();
             $_SESSION['username'] = $admin->getUsername();
             header('Location: index.php?action=listRSS');
-//            $_GET['action'] = 'listRSS';
-//            new AdminController($admin);
         } else {
             $error = true;
             require($rep.$vues['Login']);

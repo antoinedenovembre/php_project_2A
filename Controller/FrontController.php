@@ -9,13 +9,18 @@ class FrontController
 
 		try {
 			$actionList = array(
-				'Visitor' => array(NULL, 'loginPage', 'login'),
+				'Visitor' => array(null, 'loginPage', 'login'),
 				'Admin' => array('listRSS', 'addRSS', 'deleteRSS', 'modifRSS')
 			);
 
-			$controller = array_search($_GET['action'], $actionList, true);
+            foreach ($actionList as $role => $actions) {
+                if (in_array($_GET['action'], $actions, true)) {
+                    $controller = $role;
+                    break;
+                }
+            }
 
-			if (!$controller || $controller === 'Visitor') {
+			if (!isset($controller) || $controller === 'Visitor') {
 				new Controller();
 			} else {
 				$mdl = new AdminModel();
