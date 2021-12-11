@@ -66,9 +66,10 @@ class AdminModel
 		$gw->delete($url);
 	}
 
-	/**
-	 * @return array
-	 */
+    /**
+     * @param int $page
+     * @return array
+     */
 	public function getFeeds(int $page) : array
 	{
 		global $dsn, $user, $pass;

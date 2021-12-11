@@ -66,9 +66,26 @@ class FeedsGateway
         $this->con->executeQuery($query, $params);
     }
 
-	/**
-	 * @return array
-	 */
+    /**
+     * @return array
+     */
+    public function selectAllFeeds() : array
+    {
+        $query = 'SELECT * FROM feeds';
+        $this->con->executeQuery($query);
+
+        $res = $this->con->getResults();
+        $tabN = array();
+        foreach ($res as $row) {
+            $tabN[] = $row['url'];
+        }
+        return $tabN;
+    }
+
+    /**
+     * @param int $page
+     * @return array
+     */
     public function selectFeeds(int $page) : array
     {
         global $nbElements;
