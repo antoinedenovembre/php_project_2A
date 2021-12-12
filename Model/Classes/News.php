@@ -2,62 +2,80 @@
 
 class News
 {
-    private string $site;
-    private string $titre;
-    private string $dateGet;
-    private string $lien;
-    private bool $isfrench;
+    private string $url;
+    private string $title;
+    private string $desc;
+    private string $date;
+    private string $websiteUrl;
+    private string $website;
+    private bool $isFrench;
+
 
     /**
-     * @param string $lien
-     * @param string $site
-     * @param string $titre
-     * @param string $dateGet
-     * @param bool $isfrench
+     * @param string $url
+     * @param string $title
+     * @param string $desc
+     * @param string $date
+     * @param string $websiteUrl
+     * @param bool $isFrench
      */
-    public function __construct(string $lien, string $site, string $titre, string $dateGet, bool $isfrench)
+    public function __construct(string $url, string $title, string $desc, string $date, string $websiteUrl, $website ,bool $isFrench)
     {
-        $this->lien = $lien;
-        $this->site = $site;
-        $this->titre = $titre;
-        $this->dateGet = $dateGet;
-        $this->isfrench = $isfrench;
+        $this->url = $url;
+        $this->title = $title;
+        $this->desc = $desc;
+        $this->date = $date;
+        $this->websiteUrl = $websiteUrl;
+        $this->website = $website;
+        $this->isFrench = $isFrench;
     }
 
     /**
      * @return string
      */
-    public function getLien(): string
+    public function getUrl(): string
     {
-        return $this->lien;
+        return $this->url;
     }
 
     /**
      * @return string
      */
-    public function getSite(): string
+    public function getTitle(): string
     {
-        return $this->site;
+        return $this->title;
     }
 
     /**
      * @return string
      */
-    public function getTitre(): string
+    public function getDesc(): string
     {
-        return $this->titre;
+        return $this->desc;
     }
 
     /**
      * @return string
      */
-    public function getDateGet(): string
+    public function getDate(): string
     {
-	    $year = substr($this->dateGet, 0, -6);
-	    $month = substr($this->dateGet, 5, -3);
-	    $day = substr($this->dateGet, -2);
+        return date('l d F Y', strtotime($this->date));
+    }
 
-		return "$day-$month-$year";
+    /**
+     * @return string
+     */
+    public function getWebsiteUrl(): string
+    {
+        return $this->websiteUrl;
+    }
+
+    /**
+     * @return string
+     */
+    public function getWebsite(): string
+    {
+        return $this->website;
     }
 
     /**
@@ -65,6 +83,6 @@ class News
      */
     public function isFrench(): bool
     {
-        return $this->isfrench;
+        return $this->isFrench;
     }
 }

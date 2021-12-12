@@ -13,92 +13,95 @@ class NewsGateway
     }
 
     /**
-     * @param string $site
-     * @param string $titre
-     * @param string $dateGet
-     * @param string $lien
-     * @param bool $isfrench
+     * @param string $url
+     * @param string $title
+     * @param bool $isFrench
      * @return int
      */
-    public function insert(string $site, string $titre, string $dateGet, string $lien, bool $isfrench) : int
-    {
-        $query = 'INSERT INTO News(site, titre, dateGet, lien, isfrench) VALUES(:site, :titre, :dateGet, :lien, :isfrench)';
-
+    public function insertWebSite(string $url, string $title, bool $isFrench) : int {
+        $query = 'INSERT INTO newswebsite VALUES (:url, :title, :is_french)';
         $params = array(
-            ':site' => array($site, PDO::PARAM_STR),
-            ':titre' => array($titre, PDO::PARAM_STR),
-            ':dateGet' => array($dateGet, PDO::PARAM_STR),
-            ':lien' => array($lien, PDO::PARAM_STR),
-            ':isfrench' => array($isfrench, PDO::PARAM_BOOL)
+            ':url' => array($url, PDO::PARAM_STR),
+            ':title' => array($title, PDO::PARAM_STR),
+            ':is_french' => array($isFrench, PDO::PARAM_BOOL)
         );
 
         $this->con->executeQuery($query, $params);
         return $this->con->lastInsertId();
-        /*
-         * en cas de mauvaises informations, pas d'insertion et renvoie de 0 (id null)
-         * pour signifier la mauvaise insertion
-         */
     }
 
     /**
-     * @param string $site
-     * @param string $titre
-     * @param string $dateGet
-     * @param string $lien
-     * @param bool $isfrench
-     */
-    public function update(string $lien, string $site, string $titre, string $dateGet, bool $isfrench) : void
-    {
-        $query =    'UPDATE News 
-                    SET site = :site, titre = :titre, dateGet = :dateGet, isfrench = :isfrench
-                    WHERE lien = :lien';
-
-        $params = array(
-            ':lien' => array($lien, PDO::PARAM_STR),
-            ':site' => array($site, PDO::PARAM_STR),
-            ':titre' => array($titre, PDO::PARAM_STR),
-            ':dateGet' => array($dateGet, PDO::PARAM_STR),
-            ':isfrench' => array($isfrench, PDO::PARAM_BOOL)
-        );
-
-        $this->con->executeQuery($query, $params);
-    }
-
-    /**
-     * @param string $lien
-     */
-    public function delete(string $lien) : void
-    {
-        $query = 'DELETE FROM News WHERE lien = :lien';
-
-        $params = array(
-            ':lien' => array($lien, PDO::PARAM_STR)
-        );
-
-        $this->con->executeQuery($query, $params);
-    }
-
-    /**
+     * @param string $url
+     * @param string $title
+     * @param string $desc
      * @param string $date
-     * @return array
+     * @param string $webSiteUrl
+     * @return int
      */
-    public function findByDate(string $date) : array
+    public function insertNews(string $url, string $title, string $desc, string $date, string $webSiteUrl) : int
     {
-        // récupère données côté db (preparation + exec grâce à Connection::executeQuery())
-        $query = 'SELECT * FROM news WHERE dateGet = :dateGet';
+        $query = 'INSERT INTO News VALUES(:url, :title, :desc , :date, :webSiteUrl)';
+
         $params = array(
-            ':dateGet' => array($date, PDO::PARAM_STR)
+            ':url' => array($url, PDO::PARAM_STR),
+            ':title' => array($title, PDO::PARAM_STR),
+            ':desc' => array($desc, PDO::PARAM_STR),
+            ':date' => array($date, PDO::PARAM_STR),
+            ':webSiteUrl' => array($webSiteUrl, PDO::PARAM_STR)
         );
 
         $this->con->executeQuery($query, $params);
+        return $this->con->lastInsertId();
+    }
 
-        // conversion en objets
+//    /**
+//     * @param string $lien
+//     */
+//    public function delete(string $lien) : void
+//    {
+//        $query = 'DELETE FROM News WHERE lien = :lien';
+//
+//        $params = array(
+//            ':lien' => array($lien, PDO::PARAM_STR)
+//        );
+//
+//        $this->con->executeQuery($query, $params);
+//    }
+
+    /**
+     * @param string $url
+     * @return bool
+     */
+    public function findWebSiteByUrl(string $url) : bool
+    {
+        $query = 'SELECT url FROM newswebsite WHERE url = :url';
+
+        $params = array(
+            ':url' => array($url, PDO::PARAM_STR)
+        );
+
+        $this->con->executeQuery($query, $params);
         $res = $this->con->getResults();
-        $tabN = array();
-        foreach ($res as $row) {
-            $tabN[] = new News($row['site'], $row['titre'], $row['dateGet'], $row['lien'], $row['isfrench']);
-        }
-        return $tabN;
+
+        return !empty($res);
+    }
+
+    /**
+     * @param string $url
+     * @return bool
+     */
+    public function findNewsByUrl(string $url) : bool
+    {
+        $query = 'SELECT url FROM news WHERE url = :url';
+
+        $params = array(
+            ':url' => array($url, PDO::PARAM_STR)
+        );
+
+        $this->con->executeQuery($query, $params);
+        $res = $this->con->getResults();
+
+        return !empty($res);
     }
 
     /**
@@ -117,7 +120,12 @@ class NewsGateway
         $res = $this->con->getResults();
         $tabN = array();
         foreach ($res as $row) {
-            $tabN[] = new News($row['lien'], $row['site'], $row['titre'], $row['dateGet'], $row['isfrench']);
+            $query = 'SELECT * FROM newswebsite WHERE url = :url';
+            $this->con->executeQuery($query,[
+                ':url' => array($row['websiteUrl'], PDO::PARAM_STR)
+            ]);
+            $website = $this->con->getResults()[0];
+            $tabN[] = new News($row['url'], $row['title'], $row['description'], $row['date'], $row['websiteUrl'], $website['title'], $website['french']);
         }
 
         return $tabN;
