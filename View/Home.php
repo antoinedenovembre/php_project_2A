@@ -12,7 +12,7 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-light navbar-expand-lg navigation-clean-search navbar-static-top" style="background: var(--bs-gray-800);color: var(--bs-green);">
+    <nav class="navbar navbar-light navbar-expand-lg navigation-clean-search fixed-top" style="background: var(--bs-gray-800);color: var(--bs-green);">
         <div class="container"><a class="navbar-brand" href="#">AutoNews</a><button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-1"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
             <div class="collapse navbar-collapse" id="navcol-1">
                 <form class="me-auto search-form" target="_self" style="background: transparent;color: rgb(255,255,255);">
@@ -22,13 +22,14 @@
             </div>
         </div>
     </nav>
-    <div class="container">
-        <ul class="list-group mt-3">
+    <div class="container p-5 mt-5">
+        <ul class="list-group mt-3 mb-5">
 	        <?php
 		        if (!empty($tabNews)) {
 			        foreach ($tabNews as $news) {
 				        echo    '<li class="list-group-item list-group-item-dark">
                                     <a href="' . $news->getWebsiteUrl() . '">' . $news->getWebsite() . '</a>
+                                    <a> - </a>
                                     <a href="' . $news->getUrl() . '">' . $news->getTitle() . '</a>
                                     <p>' . $news->getDesc() . '</p>
                                     <p>' . $news->getDate() . '</p>

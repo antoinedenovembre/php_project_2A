@@ -32,7 +32,7 @@ CREATE TABLE IF NOT EXISTS `admins` (
   `username` varchar(20) NOT NULL,
   `password` varchar(100) NOT NULL,
   PRIMARY KEY (`username`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `admins`
@@ -75,7 +75,7 @@ CREATE TABLE IF NOT EXISTS `news` (
   `date` date NOT NULL,
   `websiteUrl` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   PRIMARY KEY (`url`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Déchargement des données de la table `news`
@@ -145,7 +145,7 @@ CREATE TABLE IF NOT EXISTS `newswebsite` (
   `title` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `french` tinyint NOT NULL DEFAULT '0',
   PRIMARY KEY (`url`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Déchargement des données de la table `newswebsite`

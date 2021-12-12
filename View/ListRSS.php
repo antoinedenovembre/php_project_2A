@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="View/assets/css/Navigation-with-Search.css">
     <link rel="stylesheet" href="View/assets/css/Newsletter-Subscription-Form.css">
     <link rel="stylesheet" href="View/assets/css/styles.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 </head>
 
 <body>
@@ -38,6 +39,8 @@
                 }
                 document.getElementById('boxesChecked').innerHTML = count.toString() + " selected";
             }
+
+            feedsSelected();
         }
 
         function feedsSelected()
@@ -57,6 +60,10 @@
                     selected.push(i, urls[i].getAttribute("href"));
                 }
             }
+
+            selected = selected.join(",");
+            console.log(selected);
+            jQuery.post('index.php?action=delSelectRSS', {feedsSelected : selected});
         }
     </script>
     <div class="container">
@@ -70,7 +77,6 @@
                         <ul class="list-inline">
                             <li class="list-inline-item mr-0">
                                 <a id="boxesChecked">0 selected</a>
-                                <a id="json-data"></a>
                             </li>
                             <li class="list-inline-item">
                                 <a href="index.php?action=delSelectRSS" class="btn btn-danger btn-sm rounded" type="button" data-placement="top" title="Delete"><i class="fa fa-trash"></i></a>
@@ -89,7 +95,7 @@
 							    echo    '<li class="list-group-item list-group-item-dark">
                                     <ul class="list-inline mr-4">
                                         <li class="list-inline-item">
-                                            <input onclick="feedsSelected();" type="checkbox">
+                                            <input onclick="checkboxes();" type="checkbox">
                                             <a><strong>' . $feed->getTitle() . '</strong></a>
                                             <a> --- Lien : </a>
                                             <a class="links" href="' . $feed->getUrl() . '">' . $feed->getUrl() . '</a>

@@ -43,12 +43,9 @@ class AdminController {
 					break;
 
 				case 'delSelectRSS':
-					if (isset($_POST['json-data'])) {
-						$arr = json_decode($_POST['json-data'], true, 512, JSON_THROW_ON_ERROR);
-						echo json_encode($arr, JSON_THROW_ON_ERROR);
-					} else {
-						$_GET['action'] = 'listRSS';
-					}
+					$arr = $_POST['feedsSelected'];
+					$arr = explode(',', $arr);
+					$this->delSelectRSS($arr);
 					break;
 
 
