@@ -9,7 +9,7 @@ class FrontController
 
 		try {
 			$actionList = array(
-				'Visitor' => array(null, 'loginPage', 'login'),
+				'Visitor' => array(null, 'loginPage', 'login', 'search', 'orderBy'),
 				'Admin' => array('listRSS', 'addRSS', 'addRSSPage', 'deleteRSS', 'delSelectRSS', 'modifRSS', 'modifRSSPage')
 			);
 

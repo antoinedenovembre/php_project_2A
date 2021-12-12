@@ -15,15 +15,90 @@
     <nav class="navbar navbar-light navbar-expand-lg navigation-clean-search fixed-top" style="background: var(--bs-gray-800);color: var(--bs-green);">
         <div class="container"><a class="navbar-brand" href="#">AutoNews</a><button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-1"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
             <div class="collapse navbar-collapse" id="navcol-1">
-                <form class="me-auto search-form" target="_self" style="background: transparent;color: rgb(255,255,255);">
-                    <div class="d-flex align-items-center"><label class="form-label d-flex mb-0" for="search-field"></label><i class="fa fa-search"></i><input class="form-control search-field" type="text" id="search-field" name="value"></div>
+                <form action="index.php?action=search" method="POST" class="me-auto search-form" target="_self" style="background: transparent;color: rgb(255,255,255);">
+                    <div class="d-flex align-items-center"><label class="form-label d-flex mb-0" for="search-field"></label><i class="fa fa-search"></i><input class="form-control search-field" type="text" id="search-field" name="stringSearch"></div>
                 </form>
                 <a class="btn btn-light action-button" role="button" style="background: var(--bs-green);" href="index.php?action=loginPage">Se connecter</a>
             </div>
         </div>
     </nav>
-    <div class="container p-5 mt-5">
-        <ul class="list-group mt-3 mb-5">
+    <div class="container pt-5 pl-5 pr-5 mt-5">
+        <div class="btn-group" role="group" aria-label="Basic example">
+            <button action="index.php?action=orderBy&type=date&
+                <?php if(isset($order, $type) && $type === "date") {
+                    switch ($order) {
+                        case "asc":
+                            echo "order=desc";
+                            break;
+                        case "desc":
+                            echo "order=asc";
+                    }
+                } ?>" type="button" class="btn btn-secondary">Date
+                <i class="fa
+                    <?php if(isset($order, $type) && $type === "date") {
+                            switch ($order) {
+                                case "asc":
+                                    echo "fa-angle-up";
+                                    break;
+                                case "desc":
+                                    echo "fa-angle-down";
+                            }
+                    }
+                    ?>">
+                </i>
+            </button>
+            <button action="index.php?action=orderBy&type=title&
+                <?php if(isset($order, $type) && $type === "title") {
+                    switch ($order) {
+                        case "asc":
+                            echo "order=desc";
+                            break;
+                        case "desc":
+                            echo "order=asc";
+                    }
+                }
+                ?>" type="button" class="btn btn-secondary">Title
+                <i class="fa
+                    <?php if(isset($order, $type) && $type === "title") {
+                        switch ($order) {
+                            case "asc":
+                                echo "fa-angle-up";
+                                break;
+                            case "desc":
+                                echo "fa-angle-down";
+                        }
+                    }
+                    ?>">
+                </i>
+            </button>
+            <button action="index.php?action=orderBy&type=website&
+                <?php if(isset($order, $type) && $type === "website") {
+                    switch ($order) {
+                        case "asc":
+                            echo "order=desc";
+                            break;
+                        case "desc":
+                            echo "order=asc";
+                    }
+                }
+                ?>" type="button" class="btn btn-secondary">Website
+                <i class="fa
+                    <?php if(isset($order, $type) && $type === "website") {
+                        switch ($order) {
+                            case "asc":
+                                echo "fa-angle-up";
+                                break;
+                            case "desc":
+                                echo "fa-angle-down";
+                        }
+                    }
+                    ?>">
+                </i>
+            </button>
+        </div>
+    </div>
+    <div class="container p-2">
+        <ul class="list-group mb-5">
 	        <?php
 		        if (!empty($tabNews)) {
 			        foreach ($tabNews as $news) {

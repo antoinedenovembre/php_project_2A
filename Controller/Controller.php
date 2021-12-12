@@ -34,6 +34,14 @@ class Controller
                     $this->login();
                     break;
 
+	            case 'search':
+					$stringSearch = $_POST['stringSearch'];
+					$this->search($stringSearch);
+					break;
+
+	            case 'orderBy':
+					break;
+
                 //mauvaise action
                 default:
                     $errorArr[] = "Bad php call";
@@ -98,4 +106,20 @@ class Controller
             require($rep.$vues['Login']);
         }
     }
+
+	/**
+	 * @param mixed $stringSearch
+	 * @return void
+	 */
+	public function search(mixed $stringSearch)
+	{
+		global $rep, $vues;
+
+		$model = new Model();
+		$nbPage = $model->getNbPage();
+		$page = Validation::validePage($_GET['page'], $nbPage);
+		$tabNews = $model->getNews($page);
+
+		require($rep.$vues['Home']);
+	}
 }
