@@ -24,77 +24,58 @@
     </nav>
     <div class="container pt-5 pl-5 pr-5 mt-5">
         <div class="btn-group" role="group" aria-label="Basic example">
-            <button action="index.php?action=orderBy&type=date&
-                <?php if(isset($order, $type) && $type === "date") {
-                    switch ($order) {
-                        case "asc":
-                            echo "order=desc";
-                            break;
-                        case "desc":
-                            echo "order=asc";
-                    }
-                } ?>" type="button" class="btn btn-secondary">Date
-                <i class="fa
-                    <?php if(isset($order, $type) && $type === "date") {
-                            switch ($order) {
-                                case "asc":
-                                    echo "fa-angle-up";
-                                    break;
-                                case "desc":
-                                    echo "fa-angle-down";
-                            }
-                    }
-                    ?>">
-                </i>
-            </button>
-            <button action="index.php?action=orderBy&type=title&
-                <?php if(isset($order, $type) && $type === "title") {
-                    switch ($order) {
-                        case "asc":
-                            echo "order=desc";
-                            break;
-                        case "desc":
-                            echo "order=asc";
-                    }
+            <?php
+                function order(string $order) : string
+                {
+                    return match ($order) {
+                        "asc" => "&order=desc",
+                        default => "&order=asc",
+                    };
                 }
-                ?>" type="button" class="btn btn-secondary">Title
-                <i class="fa
-                    <?php if(isset($order, $type) && $type === "title") {
-                        switch ($order) {
-                            case "asc":
-                                echo "fa-angle-up";
-                                break;
-                            case "desc":
-                                echo "fa-angle-down";
-                        }
+
+                function typeSelected(string $myType, string $type, $order) : string
+                {
+                    if ($myType === $type) {
+                        return match($order) {
+                            "asc"=>"fa fa-angle-up",
+                            default=>"fa fa-angle-down",};
                     }
-                    ?>">
-                </i>
-            </button>
-            <button action="index.php?action=orderBy&type=website&
-                <?php if(isset($order, $type) && $type === "website") {
-                    switch ($order) {
-                        case "asc":
-                            echo "order=desc";
-                            break;
-                        case "desc":
-                            echo "order=asc";
-                    }
+
+                    return "";
                 }
-                ?>" type="button" class="btn btn-secondary">Website
-                <i class="fa
-                    <?php if(isset($order, $type) && $type === "website") {
-                        switch ($order) {
-                            case "asc":
-                                echo "fa-angle-up";
-                                break;
-                            case "desc":
-                                echo "fa-angle-down";
-                        }
-                    }
-                    ?>">
-                </i>
-            </button>
+                echo '<button onclick="location.href=\'index.php?action=orderBy&type=date';
+                if (isset($order)) {
+                    echo order($order);
+                }
+                echo '\'" type="button" class="btn btn-light">date ';
+
+                if (isset($type, $order)) {
+                    echo '<i class="'.typeSelected("date", $type, $order).'"></i>';
+                }
+                echo '</button>';
+
+                echo '<button onclick="location.href=\'index.php?action=orderBy&type=website';
+                if (isset($order)) {
+                    echo order($order);
+                }
+                echo '\'" type="button" class="btn btn-light">website ';
+
+                if (isset($type, $order)) {
+                    echo '<i class="'.typeSelected("date", $type, $order).'"></i>';
+                }
+                echo '</button>';
+
+                echo '<button onclick="location.href=\'index.php?action=orderBy&type=title';
+                if (isset($order)) {
+                    echo order($order);
+                }
+                echo '\'" type="button" class="btn btn-light">title ';
+
+                if (isset($type, $order)) {
+                    echo '<i class="'.typeSelected("date", $type, $order).'"></i>';
+                }
+                echo '</button>';
+            ?>
         </div>
     </div>
     <div class="container p-2">
