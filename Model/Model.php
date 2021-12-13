@@ -2,15 +2,17 @@
 
 class Model
 {
-    /**
-     * @param int $page
-     * @return array
-     */
-    public function getNews(int $page) : array
+	/**
+	 * @param int $page
+	 * @param string $type
+	 * @param string $order
+	 * @return array
+	 */
+    public function getNews(int $page, string $order, string $type) : array
     {
         global $dsn, $user, $pass;
 
-        return (new NewsGateway(new Connection($dsn, $user, $pass)))->selectNews($page);
+	    return (new NewsGateway(new Connection($dsn, $user, $pass)))->selectNews($page, $order, $type);
     }
 
 	/**

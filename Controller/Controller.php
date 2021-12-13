@@ -40,6 +40,7 @@ class Controller
 					break;
 
 	            case 'orderBy':
+					$this->sort();
 					break;
 
                 //mauvaise action
@@ -62,10 +63,12 @@ class Controller
 
         $model = new Model();
         $page = 1;
-        $tabNews = $model->getNews($page);
+		$order = 'asc';
+		$type = 'date';
+        $tabNews = $model->getNews($page, $order, $type);
         $nbPage = $model->getNbPage();
 
-        require($rep.$vues['Home']);
+	    require($rep.$vues['Home']);
     }
 
     private function findNews() : void
@@ -73,9 +76,16 @@ class Controller
         global $rep, $vues;
 
         $model = new Model();
+	    if(isset($_GET['type'], $_GET['order'])) {
+		    $type = Validation::validString($_GET['type']);
+		    $order = Validation::validString($_GET['order']);
+	    } else {
+		    $order = 'asc';
+		    $type = 'date';
+	    }
         $nbPage = $model->getNbPage();
         $page = Validation::validePage($_GET['page'], $nbPage);
-        $tabNews = $model->getNews($page);
+        $tabNews = $model->getNews($page, $order, $type);
 
         require($rep.$vues['Home']);
     }
@@ -119,6 +129,34 @@ class Controller
 		$nbPage = $model->getNbPage();
 		$page = Validation::validePage($_GET['page'], $nbPage);
 		$tabNews = $model->getNews($page);
+
+		require($rep.$vues['Home']);
+	}
+
+	/**
+	 * @return void
+	 */
+	public function sort()
+	{
+		global $rep, $vues;
+
+		if(isset($_GET['type'], $_GET['order'])) {
+			$type = Validation::validString($_GET['type']);
+			$order = Validation::validString($_GET['order']);
+		} else {
+			$type = 'date';
+			$order = 'asc';
+		}
+
+		$model = new Model();
+		$nbPage = $model->getNbPage();
+
+		if (isset($_GET['page'])) {
+			$page = Validation::validePage($_GET['page'], $nbPage);
+		} else {
+			$page = 1;
+		}
+		$tabNews = $model->getNews($page, $order, $type);
 
 		require($rep.$vues['Home']);
 	}

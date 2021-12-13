@@ -47,6 +47,9 @@
                 if (isset($order)) {
                     echo order($order);
                 }
+                if (isset($page)) {
+	                echo "&page=$page";
+                }
                 echo '\'" type="button" class="btn btn-light">date ';
 
                 if (isset($type, $order)) {
@@ -58,10 +61,13 @@
                 if (isset($order)) {
                     echo order($order);
                 }
-                echo '\'" type="button" class="btn btn-light">website ';
+	            if (isset($page)) {
+		            echo "&page=$page";
+	            }
+	            echo '\'" type="button" class="btn btn-light">website ';
 
                 if (isset($type, $order)) {
-                    echo '<i class="'.typeSelected("date", $type, $order).'"></i>';
+                    echo '<i class="'.typeSelected("website", $type, $order).'"></i>';
                 }
                 echo '</button>';
 
@@ -69,10 +75,13 @@
                 if (isset($order)) {
                     echo order($order);
                 }
-                echo '\'" type="button" class="btn btn-light">title ';
+	            if (isset($page)) {
+		            echo "&page=$page";
+	            }
+	            echo '\'" type="button" class="btn btn-light">title ';
 
                 if (isset($type, $order)) {
-                    echo '<i class="'.typeSelected("date", $type, $order).'"></i>';
+                    echo '<i class="'.typeSelected("title", $type, $order).'"></i>';
                 }
                 echo '</button>';
             ?>

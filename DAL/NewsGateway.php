@@ -104,36 +104,54 @@ class NewsGateway
         return !empty($res);
     }
 
-    /**
-     * @param string $page
-     * @return array
-     */
-    public function selectNews(string $page) : array
+		/**
+		 * @param string $page
+		 * @param string $order
+		 * @param string $type
+		 * @return array
+		 */
+    public function selectNews(string $page, string $order, string $type) : array
     {
         global $nbElements;
-        $query = 'SELECT * FROM news LIMIT :page, :nbElements';
-        $this->con->executeQuery($query,[
-            ':page' => array((($page -1) * $nbElements), PDO::PARAM_INT),
-            ':nbElements' => array($nbElements, PDO::PARAM_INT)
-        ]);
+
+		switch($type) {
+			case 'date':
+				if ($order === 'asc') {
+					$query = 'SELECT * FROM news ORDER BY date LIMIT :page, :nbElements';
+				} else {
+					$query = 'SELECT * FROM news ORDER BY date DESC LIMIT :page, :nbElements';
+				}
+				break;
+			case 'title':
+				if ($order === 'asc') {
+					$query = 'SELECT * FROM news ORDER BY title LIMIT :page, :nbElements';
+				} else {
+					$query = 'SELECT * FROM news ORDER BY title DESC LIMIT :page, :nbElements';
+				}
+				break;
+			case 'website':
+				if ($order === 'asc') {
+					$query = 'SELECT * FROM news ORDER BY websiteUrl LIMIT :page, :nbElements';
+				} else {
+					$query = 'SELECT * FROM news ORDER BY websiteUrl DESC LIMIT :page, :nbElements';
+				}
+				break;
+			default:
+				$query = 'SELECT * FROM news ORDER BY date LIMIT :page, :nbElements';
+		}
+	    $this->con->executeQuery($query,[
+		    ':page' => array((($page -1) * $nbElements), PDO::PARAM_INT),
+		    ':nbElements' => array($nbElements, PDO::PARAM_INT)
+	    ]);
 
         $res = $this->con->getResults();
         $tabN = array();
-        foreach ($res as $row) {
-            $query = 'SELECT * FROM newswebsite WHERE url = :url';
-            $this->con->executeQuery($query,[
-                ':url' => array($row['websiteUrl'], PDO::PARAM_STR)
-            ]);
-            $website = $this->con->getResults()[0];
-            $tabN[] = new News($row['url'], $row['title'], $row['description'], $row['date'], $row['websiteUrl'], $website['title'], $website['french']);
-        }
-
-        return $tabN;
+	    return $this->resNewsSplit($res, $tabN);
     }
 
-	/**
-	 * @return int
-	 */
+		/**
+		 * @return int
+		 */
 	public function getNbPage() : int
 	{
 		global $nbElements;
@@ -143,5 +161,24 @@ class NewsGateway
 		$res = $this->con->getResults();
 
 		return ceil($res[0][0] / $nbElements);
+	}
+
+	/**
+	 * @param array $res
+	 * @param array $tabN
+	 * @return array
+	 */
+	public function resNewsSplit(array $res, array $tabN): array
+	{
+		foreach ($res as $row) {
+			$query = 'SELECT * FROM newswebsite WHERE url = :url';
+			$this->con->executeQuery($query, [
+				':url' => array($row['websiteUrl'], PDO::PARAM_STR)
+			]);
+			$website = $this->con->getResults()[0];
+			$tabN[] = new News($row['url'], $row['title'], $row['description'], $row['date'], $row['websiteUrl'], $website['title'], $website['french']);
+		}
+
+		return $tabN;
 	}
 }
