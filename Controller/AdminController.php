@@ -48,6 +48,9 @@ class AdminController {
 					$this->delSelectRSS($arr);
 					break;
 
+				case 'logOut':
+					$this->logOut();
+					break;
 
 				default:
 					$errorArr[] = "Bad php call";
@@ -123,5 +126,14 @@ class AdminController {
 		}
 
 		header('Location: index.php?action=listRSS');
+	}
+
+	public function logOut(): void
+	{
+		session_unset();
+		session_destroy();
+		$_SESSION = array();
+
+		header('Location: index.php?');
 	}
 }

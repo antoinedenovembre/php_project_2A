@@ -18,7 +18,25 @@
                 <form action="index.php?action=search" method="POST" class="me-auto search-form" target="_self" style="background: transparent;color: rgb(255,255,255);">
                     <div class="d-flex align-items-center"><label class="form-label d-flex mb-0" for="search-field"></label><i class="fa fa-search"></i><input class="form-control search-field" type="text" id="search-field" name="stringSearch"></div>
                 </form>
-                <a class="btn btn-light action-button" role="button" style="background: var(--bs-green);" href="index.php?action=loginPage">Se connecter</a>
+                <ul class="list-inline-item list-inline m-0 p-0">
+                    <?php if (isset($admin)) {
+                        echo '<li class="list-inline-item">';
+                        echo '<a class="btn btn-light action-button" role="button" style="background: var(--bs-green);" href="index.php?action=listRSS">Feeds</a>';
+                        echo '</li>';
+                    } ?>
+                    <li class="list-inline-item">
+                        <a class="btn btn-light action-button" role="button" style="background: var(--bs-green);" href="index.php?action=<?php if (isset($admin)) {
+		                    echo "logOut";
+	                    } else {
+		                    echo "loginPage";
+	                    }?>">
+		                    <?php if (isset($admin)) {
+			                    echo 'Se déconnecter';
+		                    } else {
+			                    echo 'Se connecter';
+		                    } ?></a>
+                    </li>
+                </ul>
             </div>
         </div>
     </nav>

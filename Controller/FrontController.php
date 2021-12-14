@@ -10,7 +10,7 @@ class FrontController
 		try {
 			$actionList = array(
 				'Visitor' => array(null, 'loginPage', 'login', 'search', 'orderBy'),
-				'Admin' => array('listRSS', 'addRSS', 'addRSSPage', 'deleteRSS', 'delSelectRSS', 'modifRSS', 'modifRSSPage')
+				'Admin' => array('listRSS', 'addRSS', 'addRSSPage', 'deleteRSS', 'delSelectRSS', 'modifRSS', 'modifRSSPage', 'logOut')
 			);
 
 			$action = $_GET['action'] ?? null;
@@ -21,17 +21,14 @@ class FrontController
 				}
 			}
 
+            $admin = (new AdminModel())->isAdmin();
 			if (!isset($controller) || $controller === 'Visitor') {
-				new Controller();
+				new Controller($admin);
+			} else if(isset($admin)) {
+			    new AdminController($admin);
 			} else {
-				$mdl = new AdminModel();
-                $admin = $mdl->isAdmin();
-                if(isset($admin)) {
-                    new AdminController($admin);
-                } else {
-                    $_GET['action'] = 'loginPage';
-                    new Controller();
-                }
+			    $_GET['action'] = 'loginPage';
+			    new Controller();
 			}
 		} catch (Throwable $e) {
             $errorArr[] = $e->getMessage();

@@ -2,22 +2,22 @@
 
 class Controller
 {
+	private Admin|null $adminAttr;
 
-    public function __construct()
+	/**
+	 * @param Admin|null $adminAttr
+	 */
+    public function __construct(Admin $adminAttr = null)
     {
-        global $rep, $vues; // nécessaire pour utiliser variables globales
-        // on démarre ou reprend la session si nécessaire (préférez utiliser un modèle pour gérer votre session ou cookies)
+        global $rep, $vues;
 
-
-
-        //on initialise un tableau d'erreur
+		$this->adminAttr = $adminAttr;
         $errorArr = array ();
 
         $action = $_GET['action'] ?? NULL;
         try {
 
             switch($action) {
-                //pas d'action, on reinitialise 1er appel
                 case NULL:
                     $this->init();
                     break;
@@ -35,15 +35,15 @@ class Controller
                     break;
 
 	            case 'search':
-					$stringSearch = $_POST['stringSearch'];
-					$this->search($stringSearch);
+					// $stringSearch = $_POST['stringSearch'];
+					// $this->search($stringSearch);
+		            $this->init();
 					break;
 
 	            case 'orderBy':
 					$this->sort();
 					break;
 
-                //mauvaise action
                 default:
                     $errorArr[] = "Bad php call";
                     require ($rep.$vues['Error']);
@@ -57,6 +57,9 @@ class Controller
         exit(0);
     }
 
+	/**
+	 * @return void
+	 */
     public function init() : void
     {
         global $rep, $vues;
@@ -65,12 +68,16 @@ class Controller
         $page = 1;
 		$order = 'asc';
 		$type = 'date';
+		$admin = $this->adminAttr;
         $tabNews = $model->getNews($page, $order, $type);
         $nbPage = $model->getNbPage();
 
 	    require($rep.$vues['Home']);
     }
 
+	/**
+	 * @return void
+	 */
     private function findNews() : void
     {
         global $rep, $vues;
@@ -86,10 +93,14 @@ class Controller
         $nbPage = $model->getNbPage();
         $page = Validation::validePage($_GET['page'], $nbPage);
         $tabNews = $model->getNews($page, $order, $type);
+	    $admin = $this->adminAttr;
 
         require($rep.$vues['Home']);
     }
 
+	/**
+	 * @return void
+	 */
     public function loginPage() : void
     {
         global $rep, $vues;
@@ -97,6 +108,9 @@ class Controller
         require($rep.$vues['Login']);
     }
 
+	/**
+	 * @return void
+	 */
     public function login(): void
     {
         global $rep, $vues;
@@ -121,7 +135,7 @@ class Controller
 	 * @param mixed $stringSearch
 	 * @return void
 	 */
-	public function search(mixed $stringSearch)
+	public function search(mixed $stringSearch): void
 	{
 		global $rep, $vues;
 
@@ -136,7 +150,7 @@ class Controller
 	/**
 	 * @return void
 	 */
-	public function sort()
+	public function sort(): void
 	{
 		global $rep, $vues;
 
@@ -157,6 +171,7 @@ class Controller
 			$page = 1;
 		}
 		$tabNews = $model->getNews($page, $order, $type);
+		$admin = $this->adminAttr;
 
 		require($rep.$vues['Home']);
 	}

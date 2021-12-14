@@ -23,7 +23,8 @@
                 <form class="me-auto search-form" target="_self" style="background: transparent;color: rgb(255,255,255);">
                     <div class="d-flex align-items-center"><label class="form-label d-flex mb-0" for="search-field"></label><i class="fa fa-search"></i><input class="form-control search-field" type="search" id="search-field" name="search"></div>
                 </form>
-            </div><i class="icon ion-ios-locked-outline" style="width: 40px;height: 40px;justify-content: center;display: flex;align-items: center;"></i>
+                <a class="btn btn-light action-button" role="button" style="background: var(--bs-green);" href="index.php?action=logOut">Se déconnecter</a>
+            </div>
         </div>
     </nav>
     <!-- selected checkboxes counter -->
