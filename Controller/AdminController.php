@@ -2,6 +2,9 @@
 
 class AdminController {
 
+    /**
+     * @param Admin|null $admin
+     */
 	public function __construct(Admin $admin = null) {
 		global $rep, $vues;
         $errorArr = array ();
@@ -65,6 +68,9 @@ class AdminController {
 		exit(0);
 	}
 
+    /**
+     * @return void
+     */
 	public function Init() : void {
 		global $rep, $vues;
 
@@ -76,6 +82,11 @@ class AdminController {
 		require($rep.$vues['ListRSS']);
 	}
 
+    /**
+     * @param string $url
+     * @param string $title
+     * @return void
+     */
 	public function addRSS(string $url, string $title) : void {
 
 		$mdl = new AdminModel();
@@ -84,6 +95,9 @@ class AdminController {
 		header('Location: index.php?action=listRSS');
 	}
 
+    /**
+     * @return void
+     */
 	public function addRSSPage() : void {
 		global $rep, $vues;
 
@@ -93,6 +107,11 @@ class AdminController {
 		require($rep.$vues['AddRSS']);
 	}
 
+    /**
+     * @param string $url
+     * @param string $title
+     * @return void
+     */
 	public function modifRSS(string $url, string $title) : void {
 
 		$mdl = new AdminModel();
@@ -101,6 +120,9 @@ class AdminController {
 		header('Location: index.php?action=listRSS');
 	}
 
+    /**
+     * @return void
+     */
 	public function modifRSSPage() : void {
 		global $rep, $vues;
 
@@ -110,6 +132,10 @@ class AdminController {
 		require($rep.$vues['ModifRSS']);
 	}
 
+    /**
+     * @param string $url
+     * @return void
+     */
 	public function deleteRSS(string $url) : void {
 
 		$mdl = new AdminModel();
@@ -118,6 +144,10 @@ class AdminController {
 		header('Location: index.php?action=listRSS');
 	}
 
+    /**
+     * @param array $urls
+     * @return void
+     */
 	public function delSelectRSS(array $urls) : void {
 
 		$mdl = new AdminModel();
@@ -128,6 +158,9 @@ class AdminController {
 		header('Location: index.php?action=listRSS');
 	}
 
+    /**
+     * @return void
+     */
 	public function logOut(): void
 	{
 		session_unset();

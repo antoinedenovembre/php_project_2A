@@ -16,17 +16,19 @@ class NewsGateway
      * @param string $url
      * @param string $title
      * @param bool $isFrench
+     * @param string $feed
      * @return int
      */
-    public function insertWebSite(string $url, string $title, bool $isFrench) : int {
-        $query = 'INSERT INTO newswebsite VALUES (:url, :title, :is_french)';
+    public function insertWebSite(string $url, string $title, bool $isFrench, string $feed) : int {
+        $query = 'INSERT INTO newswebsite VALUES (:url, :title, :isFrench, :feed)';
         $params = array(
             ':url' => array($url, PDO::PARAM_STR),
             ':title' => array($title, PDO::PARAM_STR),
-            ':is_french' => array($isFrench, PDO::PARAM_BOOL)
+            ':isFrench' => array($isFrench, PDO::PARAM_BOOL),
+            ':feed' => array($feed, PDO::PARAM_STR)
         );
-
         $this->con->executeQuery($query, $params);
+
         return $this->con->lastInsertId();
     }
 
@@ -49,24 +51,10 @@ class NewsGateway
             ':date' => array($date, PDO::PARAM_STR),
             ':webSiteUrl' => array($webSiteUrl, PDO::PARAM_STR)
         );
-
         $this->con->executeQuery($query, $params);
+
         return $this->con->lastInsertId();
     }
-
-//    /**
-//     * @param string $lien
-//     */
-//    public function delete(string $lien) : void
-//    {
-//        $query = 'DELETE FROM News WHERE lien = :lien';
-//
-//        $params = array(
-//            ':lien' => array($lien, PDO::PARAM_STR)
-//        );
-//
-//        $this->con->executeQuery($query, $params);
-//    }
 
     /**
      * @param string $url
@@ -114,44 +102,30 @@ class NewsGateway
     {
         global $nbElements;
 
-		switch($type) {
-			case 'date':
-				if ($order === 'asc') {
-					$query = 'SELECT * FROM news ORDER BY date LIMIT :page, :nbElements';
-				} else {
-					$query = 'SELECT * FROM news ORDER BY date DESC LIMIT :page, :nbElements';
-				}
-				break;
-			case 'title':
-				if ($order === 'asc') {
-					$query = 'SELECT * FROM news ORDER BY title LIMIT :page, :nbElements';
-				} else {
-					$query = 'SELECT * FROM news ORDER BY title DESC LIMIT :page, :nbElements';
-				}
-				break;
-			case 'website':
-				if ($order === 'asc') {
-					$query = 'SELECT * FROM news ORDER BY websiteUrl LIMIT :page, :nbElements';
-				} else {
-					$query = 'SELECT * FROM news ORDER BY websiteUrl DESC LIMIT :page, :nbElements';
-				}
-				break;
-			default:
-				$query = 'SELECT * FROM news ORDER BY date LIMIT :page, :nbElements';
-		}
+        $query = "SELECT * FROM news ORDER BY $type $order LIMIT :page, :nbElements";
 	    $this->con->executeQuery($query,[
 		    ':page' => array((($page -1) * $nbElements), PDO::PARAM_INT),
 		    ':nbElements' => array($nbElements, PDO::PARAM_INT)
+//            ':type' => array($type, PDO::PARAM_STR)
 	    ]);
 
-        $res = $this->con->getResults();
-        $tabN = array();
-	    return $this->resNewsSplit($res, $tabN);
+        $result = $this->con->getResults();
+        foreach ($result as &$row) {
+            $query = 'SELECT title, french FROM newswebsite WHERE url = :url';
+            $this->con->executeQuery($query, [
+                ':url' => array($row['websiteUrl'], PDO::PARAM_STR)
+            ]);
+            $res = $this->con->getResults();
+            $row['website'] = $res[0]['title'];
+            $row['french'] = $res[0]['french'];
+        }
+
+        return $result;
     }
 
-		/**
-		 * @return int
-		 */
+    /**
+     * @return int
+     */
 	public function getNbPage() : int
 	{
 		global $nbElements;
@@ -161,24 +135,5 @@ class NewsGateway
 		$res = $this->con->getResults();
 
 		return ceil($res[0][0] / $nbElements);
-	}
-
-	/**
-	 * @param array $res
-	 * @param array $tabN
-	 * @return array
-	 */
-	public function resNewsSplit(array $res, array $tabN): array
-	{
-		foreach ($res as $row) {
-			$query = 'SELECT * FROM newswebsite WHERE url = :url';
-			$this->con->executeQuery($query, [
-				':url' => array($row['websiteUrl'], PDO::PARAM_STR)
-			]);
-			$website = $this->con->getResults()[0];
-			$tabN[] = new News($row['url'], $row['title'], $row['description'], $row['date'], $row['websiteUrl'], $website['title'], $website['french']);
-		}
-
-		return $tabN;
 	}
 }

@@ -12,6 +12,11 @@ class AdminsGateway
         $this->con = $con;
     }
 
+    /**
+     * @param string $username
+     * @param string $hashPass
+     * @return int
+     */
     public function insertAdmin(string $username, string $hashPass) : int
     {
         $query = "INSERT INTO admins VALUES (:username, :password)";
@@ -23,18 +28,22 @@ class AdminsGateway
         return $this->con->lastInsertId();
     }
 
-
-    public function selectAdmin(string $username, string $password) : ?Admin
+    /**
+     * @param string $username
+     * @return string|null
+     */
+    public function selectAdmin(string $username) : ?string
     {
         $query = "SELECT password FROM admins WHERE username = :username";
         $this->con->executeQuery($query, [
             ':username' => array($username, PDO::PARAM_STR)
         ]);
 
-        $result = $this->con->getResults()[0];
-        if (empty($result) || !password_verify($password, $result['password'])) {
+        $result = $this->con->getResults();
+        if (empty($result)) {
             return null;
         }
-        return new Admin('admin', $username);
+
+        return $result[0]['password'];
     }
 }

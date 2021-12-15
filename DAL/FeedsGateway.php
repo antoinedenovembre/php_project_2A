@@ -37,6 +37,7 @@ class FeedsGateway
     /**
      * @param string $title
      * @param string $url
+     * @return void
      */
     public function update(string $title, string $url): void
     {
@@ -46,7 +47,6 @@ class FeedsGateway
             ':title' => array($title, PDO::PARAM_STR),
             ':url' => array($url, PDO::PARAM_STR)
         );
-
         $this->con->executeQuery($query, $params);
     }
 
@@ -93,13 +93,7 @@ class FeedsGateway
             ':nbElements' => array($nbElements, PDO::PARAM_INT)
         ]);
 
-        $res = $this->con->getResults();
-        $tabN = array();
-        foreach ($res as $row) {
-            $tabN[] = new Feed($row['title'], $row['url']);
-        }
-
-        return $tabN;
+        return $this->con->getResults();
     }
 
 	/**

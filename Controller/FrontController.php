@@ -2,14 +2,13 @@
 
 class FrontController
 {
-
 	public function __construct()
 	{
 		global $rep, $vues;
 
 		try {
 			$actionList = array(
-				'Visitor' => array(null, 'loginPage', 'login', 'search', 'orderBy'),
+				'Visitor' => array(null, 'loginPage', 'login', 'search'),
 				'Admin' => array('listRSS', 'addRSS', 'addRSSPage', 'deleteRSS', 'delSelectRSS', 'modifRSS', 'modifRSSPage', 'logOut')
 			);
 

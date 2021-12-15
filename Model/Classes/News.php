@@ -10,16 +10,16 @@ class News
     private string $website;
     private bool $isFrench;
 
-
     /**
      * @param string $url
      * @param string $title
      * @param string $desc
      * @param string $date
      * @param string $websiteUrl
+     * @param string $website
      * @param bool $isFrench
      */
-    public function __construct(string $url, string $title, string $desc, string $date, string $websiteUrl, $website ,bool $isFrench)
+    public function __construct(string $url, string $title, string $desc, string $date, string $websiteUrl, string $website ,bool $isFrench)
     {
         $this->url = $url;
         $this->title = $title;

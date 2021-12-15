@@ -17,7 +17,7 @@
 
                 if (!$news->findWebSiteByUrl($webUrl)) {
                     $fr = $website->langage == 'fr';
-                    $news->insertWebSite($webUrl, $website->title, $fr);
+                    $news->insertWebSite($webUrl, $website->title, $fr, $feed);
                 }
 
                 foreach ($website->item as $item) {

@@ -12,7 +12,13 @@ class Model
     {
         global $dsn, $user, $pass;
 
-	    return (new NewsGateway(new Connection($dsn, $user, $pass)))->selectNews($page, $order, $type);
+	    $result =  (new NewsGateway(new Connection($dsn, $user, $pass)))->selectNews($page, $order, $type);
+        $news = [];
+        foreach ($result as $row) {
+            $news[] = new News($row['url'], $row['title'], $row['description'], $row['date'], $row['websiteUrl'], $row['website'], $row['french']);
+        }
+
+        return $news;
     }
 
 	/**

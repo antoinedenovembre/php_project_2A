@@ -4,6 +4,9 @@ class Autoload
 {
     private static Autoload|null $_instance = null;
 
+    /**
+     * @return void
+     */
     public static function start() : void
     {
         if(null !== self::$_instance) {
@@ -17,6 +20,9 @@ class Autoload
         }
     }
 
+    /**
+     * @return void
+     */
     public static function shutDown() : void
     {
         if(null !== self::$_instance) {
@@ -28,6 +34,10 @@ class Autoload
         }
     }
 
+    /**
+     * @param $class
+     * @return void
+     */
     private static function _autoload($class) : void
     {
         global $rep;

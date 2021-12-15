@@ -13,10 +13,14 @@
 
 <body>
     <nav class="navbar navbar-light navbar-expand-lg navigation-clean-search fixed-top" style="background: var(--bs-gray-800);color: var(--bs-green);">
-        <div class="container"><a class="navbar-brand" href="#">AutoNews</a><button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-1"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
+        <div class="container"><a class="navbar-brand" href="index.php">AutoNews</a><button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-1">
+                <span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
             <div class="collapse navbar-collapse" id="navcol-1">
                 <form action="index.php?action=search" method="POST" class="me-auto search-form" target="_self" style="background: transparent;color: rgb(255,255,255);">
-                    <div class="d-flex align-items-center"><label class="form-label d-flex mb-0" for="search-field"></label><i class="fa fa-search"></i><input class="form-control search-field" type="text" id="search-field" name="stringSearch"></div>
+                    <div class="d-flex align-items-center">
+                        <label class="form-label d-flex mb-0" for="search-field"></label>
+                        <i class="fa fa-search"></i><input class="form-control search-field" type="text" id="search-field" name="stringSearch">
+                    </div>
                 </form>
                 <ul class="list-inline-item list-inline m-0 p-0">
                     <?php if (isset($admin)) {
@@ -46,8 +50,8 @@
                 function order(string $order) : string
                 {
                     return match ($order) {
-                        "asc" => "&order=desc",
-                        default => "&order=asc",
+                        "desc" => "&order=asc",
+                        default => "&order=desc",
                     };
                 }
 
@@ -55,53 +59,26 @@
                 {
                     if ($myType === $type) {
                         return match($order) {
-                            "asc"=>"fa fa-angle-up",
-                            default=>"fa fa-angle-down",};
+                            "desc"=>"fa fa-angle-down",
+                            default=>"fa fa-angle-up",};
                     }
 
                     return "";
                 }
-                echo '<button onclick="location.href=\'index.php?action=orderBy&type=date';
-                if (isset($order)) {
-                    echo order($order);
-                }
-                if (isset($page)) {
-	                echo "&page=$page";
-                }
-                echo '\'" type="button" class="btn btn-light">date ';
 
-                if (isset($type, $order)) {
-                    echo '<i class="'.typeSelected("date", $type, $order).'"></i>';
-                }
-                echo '</button>';
+                if(isset($order, $type, $page) && !empty($tabNews)) {
+                    echo '<button onclick="location.href=\'index.php?action=findNews&type=date';
+                    echo order($order) . "&page=$page" . '\'" type="button" class="btn btn-light">date';
+                    echo '<i class="'.typeSelected("date", $type, $order).'"></i></button>';
 
-                echo '<button onclick="location.href=\'index.php?action=orderBy&type=website';
-                if (isset($order)) {
-                    echo order($order);
-                }
-	            if (isset($page)) {
-		            echo "&page=$page";
-	            }
-	            echo '\'" type="button" class="btn btn-light">website ';
+                    echo '<button onclick="location.href=\'index.php?action=findNews&type=websiteUrl';
+                    echo order($order) . "&page=$page" . '\'" type="button" class="btn btn-light">website';
+                    echo '<i class="'.typeSelected("website", $type, $order).'"></i></button>';
 
-                if (isset($type, $order)) {
-                    echo '<i class="'.typeSelected("website", $type, $order).'"></i>';
+                    echo '<button onclick="location.href=\'index.php?action=findNews&type=title';
+                    echo order($order) . "&page=$page" . '\'" type="button" class="btn btn-light">title';
+                    echo '<i class="'.typeSelected("title", $type, $order).'"></i></button>';
                 }
-                echo '</button>';
-
-                echo '<button onclick="location.href=\'index.php?action=orderBy&type=title';
-                if (isset($order)) {
-                    echo order($order);
-                }
-	            if (isset($page)) {
-		            echo "&page=$page";
-	            }
-	            echo '\'" type="button" class="btn btn-light">title ';
-
-                if (isset($type, $order)) {
-                    echo '<i class="'.typeSelected("title", $type, $order).'"></i>';
-                }
-                echo '</button>';
             ?>
         </div>
     </div>
@@ -130,50 +107,55 @@
                 <nav class="d-xxl-flex justify-content-xxl-center" style="background: transparent;">
                     <ul class="pagination">
 	                    <?php
-                            function displayPage(int $pos, int $page) : void
+                            function liRef(string $type, string $order) : string
+                            {
+                                return '<a class="page-link" href="index.php?action=findNews&type=' . $type . '&order=' . $order . '&page=';
+                            }
+
+                            function displayPage(int $pos, int $page, string $type, $order) : void
                             {
                                 if ($pos === $page) {
-                                    echo '<li class="page-item active"><a class="page-link" href="index.php?action=findNews&page=' . $page . '">' . $page . '</a></li>';
+                                    echo '<li class="page-item active">' . liRef($type, $order) . $pos . '">' . $pos . '</a></li>';
                                 } else {
-                                    echo '<li class="page-item"><a class="page-link" href="index.php?action=findNews&page=' . $pos . '">' . $pos . '</a></li>';
+                                    echo '<li class="page-item">' . liRef($type, $order) . $pos . '">' . $pos . '</a></li>';
                                 }
                             }
 
-		                    if (isset($page, $nbPage)) {
+		                    if (isset($page, $nbPage, $order, $type)) {
                                 if ($nbPage <= 1) {
                                     echo '<li class="page-item active">1</li>';
                                 } else {
                                     if ($page !== 1) {
-                                        echo '<li class="page-item"><a class="page-link" href="index.php?action=findNews&page=', $page - 1, '" aria-label="Previous"><span aria-hidden="true">«</span></a></li>';
+                                        echo '<li class="page-item">' . liRef($type, $order) . $page - 1, '" aria-label="Previous"><span aria-hidden="true">«</span></a></li>';
                                     }
                                     if ($nbPage < 8) {
                                         for ($i = 1; $i <= $nbPage; ++$i) {
-                                            displayPage($i, $page);
+                                            displayPage($i, $page, $type, $order);
                                         }
                                     } else if ($page < 4) {
                                         for ($i = 1; $i <= 5; ++$i) {
-                                            displayPage($i, $page);
+                                            displayPage($i, $page, $type, $order);
                                         }
                                         echo '<li class="page-item">...</li>';
-                                        echo '<li class="page-item"><a class="page-link" href="index.php?action=findNews&page=' . $nbPage . '">' . $nbPage . '</a></li>';
+                                        echo '<li class="page-item">' . liRef($type, $order) . $nbPage . '">' . $nbPage . '</a></li>';
                                     } else if ($page > $nbPage - 3) {
-                                        echo '<li class="page-item"><a class="page-link" href="index.php?action=findNews&page=1">1</a></li>';
+                                        echo '<li class="page-item">' . liRef($type, $order) . '">1</a></li>';
                                         echo '<li class="page-item">...</li>';
                                         for ($i = $nbPage - 4; $i <= $nbPage; ++$i) {
-                                            displayPage($i, $page);
+                                            displayPage($i, $page, $type, $order);
                                         }
                                     } else {
-                                        echo '<li class="page-item"><a class="page-link" href="index.php?action=findNews&page=1">1</a></li>';
-                                        echo '<li class="page-item"><a class="page-link" href="#">...</a></li>';
-                                        for ($i = $page - 2; $i <= $page + 2; ++$i) {
-                                            displayPage($i, $page);
+                                        echo '<li class="page-item">' . liRef($type, $order) .  '">1</a></li>';
+                                        echo '<li class="page-item">...</li>';
+                                        for ($i = $page - 1; $i <= $page + 1; ++$i) {
+                                            displayPage($i, $page, $type, $order);
                                         }
                                         echo '<li class="page-item">...</li>';
-                                        echo '<li class="page-item"><a class="page-link" href="index.php?action=findNews&page=' . $nbPage . '">' . $nbPage . '</a></li>';
+                                        echo '<li class="page-item">' . liRef($type, $order) . $nbPage . '">' . $nbPage . '</a></li>';
                                     }
 
                                     if ($page !== $nbPage) {
-                                        echo '<li class="page-item"><a class="page-link" href="index.php?action=findNews&page=', $page + 1, '" aria-label="Next"><span aria-hidden="true">»</span></a></li>';
+                                        echo '<li class="page-item">' . liRef($type, $order) . $page + 1, '" aria-label="Next"><span aria-hidden="true">»</span></a></li>';
                                     }
                                 }
 		                    }

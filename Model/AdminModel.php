@@ -11,7 +11,18 @@ class AdminModel
     {
         global $dsn, $user, $pass;
 
-        return (new AdminsGateway(new Connection($dsn, $user, $pass)))->selectAdmin($username, $password);
+        $hasPass = (new AdminsGateway(new Connection($dsn, $user, $pass)))->selectAdmin($username);
+        if ($hasPass === null) {
+            return null;
+        }
+
+        if (password_verify($password, $hasPass)) {
+            $_SESSION['role'] = "admin";
+            $_SESSION['username'] = $username;
+            return new Admin($username, $password);
+        }
+
+        return null;
     }
 
     /**
@@ -74,7 +85,13 @@ class AdminModel
 	{
 		global $dsn, $user, $pass;
 
-		return (new FeedsGateway(new Connection($dsn, $user, $pass)))->selectFeeds($page);
+		$feeds = (new FeedsGateway(new Connection($dsn, $user, $pass)))->selectFeeds($page);
+        $tabN = array();
+        foreach ($feeds as $row) {
+            $tabN[] = new Feed($row['title'], $row['url']);
+        }
+
+        return $tabN;
 	}
 
 	/**
